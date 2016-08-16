@@ -122,10 +122,12 @@ com/yaesta/integration/vitex/wsdl/GiftCardGetResponse.class
 com/yaesta/integration/vitex/wsdl/ServicePriceInsertUpdateResponse.class
 com/yaesta/integration/vitex/json/bean/Facets_.class
 com/yaesta/integration/vitex/wsdl/GiftListSkuSetPurchasedResponse.class
+com/yaesta/integration/datil/json/bean/Transportista.class
 com/yaesta/app/persistence/entity/SupplierDeliveryCalendar.class
 com/yaesta/integration/vitex/wsdl/dto/NewsletterDTO.class
 com/yaesta/integration/vitex/wsdl/dto/IntegrationErrorDTO.class
 com/yaesta/integration/vitex/json/bean/OrderSchema.class
+com/yaesta/integration/datil/json/bean/ItemGuiaRemision.class
 com/yaesta/integration/vitex/wsdl/ClientGetByCPF.class
 com/yaesta/integration/vitex/wsdl/OrderChangeTrackingNumberV3Response.class
 com/yaesta/integration/vitex/wsdl/dto/PaymentDTO.class
@@ -231,6 +233,7 @@ com/yaesta/integration/vitex/wsdl/ProductGet.class
 com/yaesta/integration/vitex/wsdl/AddressGetByClientIdV2Response.class
 com/yaesta/integration/vitex/wsdl/StockKeepingUnitImageRemoveByName.class
 com/yaesta/app/persistence/entity/Category.class
+com/yaesta/integration/datil/json/bean/GuiaRemisionRespuesta.class
 com/yaesta/app/persistence/service/ParameterService.class
 com/yaesta/integration/vitex/json/bean/OrderBean.class
 com/yaesta/integration/vitex/wsdl/dto/ArrayOfProductFieldNameDTO.class
@@ -241,6 +244,7 @@ com/yaesta/integration/vitex/wsdl/dto/ArrayOfOrderItemServiceDTO.class
 com/yaesta/integration/vitex/wsdl/GiftListSkuSetPurchased.class
 com/yaesta/integration/vitex/wsdl/StockKeepingUnitPriceUpdateByRefId.class
 com/yaesta/integration/datil/json/bean/Impuesto.class
+com/yaesta/integration/datil/json/bean/Destinatario.class
 com/yaesta/integration/vitex/bean/OrderCompleteBean.class
 com/yaesta/integration/vitex/wsdl/ImageServiceInsertUpdate.class
 com/yaesta/integration/vitex/wsdl/GiftListSearchResponse.class
@@ -458,6 +462,7 @@ com/yaesta/integration/vitex/wsdl/BrandGet.class
 com/yaesta/integration/vitex/wsdl/IntegrationInterfaceGetAllResponse.class
 com/yaesta/integration/vitex/wsdl/BrandGetByNameResponse.class
 com/yaesta/integration/vitex/wsdl/StockKeepingUnitActive.class
+com/yaesta/integration/datil/json/bean/GuiaRemision.class
 com/yaesta/integration/vitex/wsdl/IntegrationLogErrorInsertUpdate.class
 com/yaesta/integration/vitex/wsdl/OrderChangeTrackingNumber.class
 com/yaesta/integration/vitex/wsdl/FreightCalculateV3.class
@@ -477,6 +482,7 @@ com/yaesta/integration/vitex/wsdl/dto/OrderInvoiceDTO.class
 com/yaesta/integration/vitex/bean/CreditNoteBean.class
 com/yaesta/integration/vitex/wsdl/StockKeepingUnitKitDeleteByParent.class
 com/yaesta/app/persistence/entity/TramacoSupplier.class
+com/yaesta/integration/vitex/bean/WayBillSchema.class
 com/yaesta/app/persistence/controller/BrandController.class
 com/yaesta/integration/vitex/json/bean/ItemInvoice.class
 com/yaesta/app/persistence/util/HibernateProxyTypeAdapter$1.class

@@ -4,6 +4,7 @@ public enum PaymentEnum {
 
 	PAGO_CONTRA_ENTREGA("Pago contra entrega"),
 	PAYPAL("PayPal"),
+	NO_PAYMENT("NO-PAYMENT"),
 	PAYCLUB("PayClub"),
 	SAFETYPAY("Safetypay"),
 	TARJETA_ALIA("Tarjeta Alia"),
