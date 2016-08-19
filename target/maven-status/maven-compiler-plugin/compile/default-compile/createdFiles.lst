@@ -125,6 +125,7 @@ com/yaesta/integration/vitex/wsdl/GiftListSkuSetPurchasedResponse.class
 com/yaesta/integration/datil/json/bean/Transportista.class
 com/yaesta/app/persistence/entity/SupplierDeliveryCalendar.class
 com/yaesta/integration/vitex/wsdl/dto/NewsletterDTO.class
+com/yaesta/app/persistence/controller/OrderController.class
 com/yaesta/integration/vitex/wsdl/dto/IntegrationErrorDTO.class
 com/yaesta/integration/vitex/json/bean/OrderSchema.class
 com/yaesta/integration/datil/json/bean/ItemGuiaRemision.class
@@ -265,6 +266,7 @@ com/yaesta/integration/vitex/wsdl/WareHouseIStockableUpdateV3.class
 com/yaesta/integration/vitex/wsdl/dto/AddressDTO2.class
 com/yaesta/integration/vitex/wsdl/CategoryGet.class
 com/yaesta/app/persistence/entity/Order.class
+com/yaesta/integration/vitex/json/bean/OrderCancel.class
 com/yaesta/integration/vitex/wsdl/ProductEspecificationListByProductId.class
 com/yaesta/integration/vitex/wsdl/dto/ArrayOfOrderDTO.class
 com/yaesta/integration/vitex/wsdl/ServicePriceInsertUpdate.class
@@ -367,6 +369,7 @@ com/yaesta/integration/vitex/wsdl/ProductGetSimilarCategory.class
 com/yaesta/integration/vitex/wsdl/ProductGetAllFromUpdatedDateAndIdResponse.class
 com/yaesta/integration/vitex/wsdl/dto/ArrayOfOrderDiscountDTO.class
 com/yaesta/integration/vitex/wsdl/vo/OrderVO.class
+com/yaesta/app/persistence/controller/TableSequenceController.class
 com/yaesta/integration/vitex/wsdl/dto/ArrayOfFreightStockKeepingUnitDTO.class
 com/yaesta/integration/vitex/wsdl/StockKeepingUnitKitListBySkuIdResponse.class
 com/yaesta/app/util/xml/JaxbXmlUtil.class
@@ -423,6 +426,7 @@ com/yaesta/app/persistence/entity/TramacoZone.class
 com/yaesta/integration/vitex/wsdl/OrderGetByStatus.class
 com/yaesta/integration/vitex/wsdl/IntegrationLogEvent.class
 com/yaesta/integration/vitex/wsdl/GiftListGetAllFromModifiedDateAndIdResponse.class
+com/yaesta/app/persistence/vo/PhoneContainerVO.class
 com/yaesta/integration/vitex/wsdl/IntegrationLogErrorInsertUpdateResponse.class
 com/yaesta/integration/vitex/wsdl/IntegrationErrorCheckInstanceExists.class
 com/yaesta/integration/vitex/wsdl/GiftListGetAllBetweenEventDateIntervalAndIdResponse.class
@@ -459,6 +463,7 @@ com/yaesta/integration/vitex/wsdl/WareHouseIStockableGetByStockKeepingUnitV3.cla
 com/yaesta/app/persistence/controller/ParameterController.class
 com/yaesta/integration/vitex/wsdl/GiftListGetType.class
 com/yaesta/integration/vitex/wsdl/BrandGet.class
+com/yaesta/app/persistence/vo/EmailContainerVO.class
 com/yaesta/integration/vitex/wsdl/IntegrationInterfaceGetAllResponse.class
 com/yaesta/integration/vitex/wsdl/BrandGetByNameResponse.class
 com/yaesta/integration/vitex/wsdl/StockKeepingUnitActive.class
@@ -490,6 +495,7 @@ com/yaesta/integration/vitex/wsdl/AddressByAddressClientResponse.class
 com/yaesta/integration/vitex/wsdl/ObjectFactory.class
 com/yaesta/integration/vitex/wsdl/dto/ArrayOfFreightScheduledDateOptionDTO.class
 com/yaesta/integration/bpm/activiti/service/ActivitiService.class
+com/yaesta/app/persistence/vo/ContactContainerVO.class
 com/yaesta/integration/vitex/json/bean/AdditionalInfo.class
 com/yaesta/integration/vitex/wsdl/GiftListGetAllFromCreatedDateAndId.class
 com/yaesta/integration/vitex/wsdl/vo/GuideVO.class
@@ -525,6 +531,7 @@ com/yaesta/integration/vitex/wsdl/GiftListGetResponse.class
 com/yaesta/integration/vitex/wsdl/StockKeepingUnitImageRemoveResponse.class
 com/yaesta/app/YaestaWarApplication.class
 com/yaesta/integration/vitex/wsdl/dto/StockKeepingUnitDTO.class
+com/yaesta/app/persistence/controller/GuideController.class
 com/yaesta/integration/vitex/wsdl/StockKeepingUnitActiveResponse.class
 com/yaesta/integration/vitex/wsdl/IntegrationSettingsResponse.class
 com/yaesta/integration/vitex/wsdl/ProductEspecificationInsertByListResponse.class
@@ -541,6 +548,7 @@ com/yaesta/integration/vitex/wsdl/vo/SellerVO.class
 com/yaesta/integration/vitex/wsdl/StockKeepingUnitGetAllFromUpdatedDate.class
 com/yaesta/integration/vitex/wsdl/vo/OrderDeliveryVO.class
 com/yaesta/integration/datil/json/bean/QueryParams.class
+com/yaesta/app/persistence/vo/TableSequenceVO.class
 com/yaesta/integration/vitex/wsdl/GiftListV2Filters.class
 com/yaesta/app/persistence/entity/User.class
 com/yaesta/integration/vitex/wsdl/ClientInsertUpdateV3Response.class
