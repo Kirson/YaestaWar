@@ -102,6 +102,7 @@ com/yaesta/integration/vitex/wsdl/AddressGetByClientIdV2.class
 com/yaesta/app/persistence/service/GuideService.class
 com/yaesta/integration/tramaco/dto/SupplierDTO.class
 com/yaesta/integration/vitex/wsdl/dto/ClientDTO.class
+com/yaesta/integration/base/util/BaseUtil.class
 com/yaesta/integration/datil/json/bean/Emisor.class
 com/yaesta/integration/vitex/json/bean/ItemAttachment.class
 com/yaesta/integration/vitex/service/base/ProductBaseService.class

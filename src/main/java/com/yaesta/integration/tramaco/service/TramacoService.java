@@ -19,12 +19,14 @@ import com.yaesta.app.persistence.entity.Supplier;
 import com.yaesta.app.persistence.entity.TramacoZone;
 import com.yaesta.app.persistence.repository.TramacoZoneRepository;
 import com.yaesta.app.persistence.service.TableSequenceService;
+import com.yaesta.integration.base.util.BaseUtil;
 import com.yaesta.integration.datil.json.enums.PagoEnum;
 import com.yaesta.integration.tramaco.dto.GuideDTO;
 import com.yaesta.integration.tramaco.dto.TramacoAuthDTO;
 import com.yaesta.integration.vitex.json.bean.Dimension;
 import com.yaesta.integration.vitex.json.bean.ItemComplete;
 import com.yaesta.integration.vitex.json.bean.Payment;
+import com.yaesta.integration.vitex.json.bean.PriceTag;
 import com.yaesta.integration.vitex.json.bean.Transaction;
 import com.yaesta.integration.vitex.json.bean.enums.PaymentEnum;
 
@@ -78,6 +80,8 @@ public class TramacoService implements Serializable{
 	private @Value("${tramaco.pdf.path}") String tramacoPdfPath;
 	private @Value("${tramaco.default.document}") String tramacoDefaultDocument;
 	private @Value("${yaesta.ruc}") String yaestaRuc;
+	private @Value("${datil.iva.value}") String datilIvaValue;
+	private @Value("${datil.iva.percent.value}") String datilIvaPercentValue;
 
 	public TramacoAuthDTO authService(){
 
@@ -509,24 +513,36 @@ public class TramacoService implements Serializable{
 							}
 						}//fin for
 						
-					}//
-				}
-			}
+					}//fin if tr..getPayments
+				}//fin del for Transaction
+			}//fin if payment data
 			
 			
 			
 			//*****//
 			List<EntityCargaDestino> lstCargaDestino = new ArrayList<>();
 			//................................TRANSACCION 1.........................................//
-			
+			EntityCargaDestino entCargaDestino = new EntityCargaDestino();
+			entCargaDestino.setId(tableSequenceService.getNextValue("CARGA_DESTINO").intValue());
+			//*******//
+			EntityCarga carga = new EntityCarga();
+			//carga.
+			carga.setBultos(guideInfo.getSupplierInfo().getDeliveryInfo().getPackages().intValue());
+			Integer contrato = 0;
+			for(EntityContrato entityContrato:tramacoAuth.getRespuestaAutenticarWs().getSalidaAutenticarWs().getLstContrato()){
+				contrato = entityContrato.getId();
+				if(contrato==2977){
+					break;
+				}
+			}
+			carga.setContrato(contrato);
+		    Double valorAsegurado = 0D;
+			String descItem = "";
+		    int itera =0;
 			for(ItemComplete ic:guideInfo.getSupplierInfo().getDeliveryInfo().getItemList())
 			{
-				EntityCargaDestino entCargaDestino = new EntityCargaDestino();
-				entCargaDestino.setId(tableSequenceService.getNextValue("CARGA_DESTINO").intValue());
-				//*******//
-				EntityCarga carga = new EntityCarga();
-				//carga.
-				
+				System.out.println("Iteracion "+itera);
+				itera++;
 				Dimension dim = (Dimension) ic.getAdditionalProperties().get("dimension");
 				
 				if(dim!=null){
@@ -541,32 +557,57 @@ public class TramacoService implements Serializable{
 					carga.setLargo(0D);
 					carga.setPeso(0D);
 				}
-				carga.setBultos(guideInfo.getSupplierInfo().getDeliveryInfo().getPackages().intValue());
-				Integer contrato = 0;
-				for(EntityContrato entityContrato:tramacoAuth.getRespuestaAutenticarWs().getSalidaAutenticarWs().getLstContrato()){
-					contrato = entityContrato.getId();
-					if(contrato==2977){
-						break;
-					}
-				}
-				carga.setContrato(contrato);
-				carga.setDescripcion(ic.getName());
+				descItem = descItem +" "+ic.getName();
+				System.out.println("Descripcion Item"+descItem);
+				carga.setDescripcion(descItem);
 				carga.setObservacion(observacionText);
-				carga.setValorAsegurado(ic.getPrice());
+				
+				
+				
+				itemValue = itemValue+ic.getPrice()*ic.getQuantity();
+				itemValue = (double) Math.round(itemValue * 100) / 100;
+				Double discount=0D;
+				Boolean hasTax = Boolean.FALSE;
+				if(ic.getPriceTags()!=null && !ic.getPriceTags().isEmpty()){
+					for(PriceTag pt:ic.getPriceTags()){
+						if(pt.getName().contains("discount@price")){
+							Double val= pt.getValue();
+							if(val.intValue()<0){
+								val = val* (-1);
+							}
+						    val = (double) Math.round(val * 100) / 100;
+						    discount=val;
+							//break;
+						}
+						if(pt.getName().contains("tax@price")){
+							hasTax=Boolean.TRUE;
+						}
+					}
+				}else{
+					discount=0D;
+				}
 				
 				if(ic.getShippingPrice()!=null){
 					System.out.println("shippingPrice "+ ic.getShippingPrice());
 					carga.setValorCobro(ic.getShippingPrice());
-					deliveryCost = deliveryCost+ic.getShippingPrice();
+					deliveryCost = deliveryCost+itemValue;
 				}else{
-					System.out.println("Sin costo de cobro");
-					carga.setValorCobro(0D);
-					
+					System.out.println("Sin costo de cobro de envio");
+					//carga.setValorCobro(0D);
 				}
-				
-				itemValue = itemValue+ic.getPrice();
+				Double iva = 0D;
+				itemValue = itemValue - discount;
+				if(ic.getTax().intValue()>0){
+					iva=ic.getTax();
+				}else{
+					if(hasTax){
+						iva=BaseUtil.calculateIVA(itemValue,new Integer(datilIvaValue),datilIvaPercentValue);
+					}
+				}
+				itemValue = itemValue + iva;
 				
 				if(hasAdjunto){
+					valorAsegurado = valorAsegurado+ic.getPrice();
 					carga.setAdjuntos(Boolean.TRUE);
 					String codigoAdjunto =  getTramacoAdjCode();
 					System.out.println("Codigo Adjunto "+codigoAdjunto);
@@ -581,72 +622,74 @@ public class TramacoService implements Serializable{
 				
 				
 				carga.setProducto(1);
-				carga.setValorAsegurado(itemValue);
+				carga.setValorAsegurado(valorAsegurado);
 				carga.setLocalidad(0);
 				carga.setGuia(guideInfo.getOrderComplete().getOrderId());
-				entCargaDestino.setCarga(carga);
-				//******//
-				EntityActor destinatario = new EntityActor();
-				destinatario.setApellidos(guideInfo.getOrderComplete().getClientProfileData().getLastName());
-				destinatario.setCallePrimaria(guideInfo.getOrderComplete().getShippingData().getAddress().getStreet());
-				if(guideInfo.getOrderComplete().getShippingData().getAddress().getComplement()!=null){
-					destinatario.setCalleSecundaria(guideInfo.getOrderComplete().getShippingData().getAddress().getComplement());
-				}else{
-					destinatario.setCalleSecundaria("");
-				}
-				if(guideInfo.getOrderComplete().getClientProfileData().getDocument()!=null){
-					destinatario.setCiRuc(guideInfo.getOrderComplete().getClientProfileData().getDocument());
-				}else{
-					destinatario.setCiRuc(tramacoDefaultDocument);
-				}
-				//destinatario.setCiRuc(tramacoDefaultDocument);
-				destinatario.setTipoIden("05");
 				
-				if(guideInfo.getOrderComplete().getShippingData().getAddress().getCity()!=null){
-					String province =guideInfo.getOrderComplete().getShippingData().getAddress().getState().toUpperCase();
-					String canton = guideInfo.getOrderComplete().getShippingData().getAddress().getCity().toUpperCase();
-					List<TramacoZone> zones = tramacoZoneRepository.findByProvinciaAndCantonAndParroquia(province, canton, canton);
-					if(zones!=null && !zones.isEmpty()){
-						destinatario.setCodigoPostal(zones.get(0).getCodigo().intValue());
-					}
-					
-				}else if(guideInfo.getOrderComplete().getShippingData().getAddress().getPostalCode()!=null){
-					destinatario.setCodigoPostal(new Integer(guideInfo.getOrderComplete().getShippingData().getAddress().getPostalCode()));
-				}else{
-					destinatario.setCodigoPostal(0);
-				}
-				
-				destinatario.setEmail(guideInfo.getOrderComplete().getClientProfileData().getEmail());
-				destinatario.setNombres(guideInfo.getOrderComplete().getClientProfileData().getFirstName());
-				destinatario.setNumero(guideInfo.getOrderComplete().getShippingData().getAddress().getNumber());
-				if(guideInfo.getOrderComplete().getShippingData().getAddress().getReference()!=null){
-					destinatario.setReferencia(guideInfo.getOrderComplete().getShippingData().getAddress().getReference());
-				}else{
-					destinatario.setReferencia("");
-				}
-				if(guideInfo.getOrderComplete().getClientProfileData().getPhone()!=null){
-					destinatario.setTelefono(guideInfo.getOrderComplete().getClientProfileData().getPhone());
-				}else{
-					destinatario.setTelefono("         ");
-				}
-				entCargaDestino.setDestinatario(destinatario);
-				//*************//
-				List<EntityServicio> lstServicio = new ArrayList<>();
-				EntityServicio entServicio = new EntityServicio();
-				entServicio.setId(38); //Verificar
-				entServicio.setTipo("LIV");
-				entServicio.setCantidad(0.0);
-				lstServicio.add(entServicio);
-				entCargaDestino.setLstServicio(lstServicio);
-				
-				/********/
-				lstCargaDestino.add(entCargaDestino);
-				//*******//
-				entGen.setRemitente(remitente);
-				entGen.setLstCargaDestino(lstCargaDestino);
-				entGen.setUsuario( tramacoAuth.getRespuestaAutenticarWs().getSalidaAutenticarWs().getUsuario());  //Verificar
+			}//fin del for
 			
+			entCargaDestino.setCarga(carga);
+			//******//
+			EntityActor destinatario = new EntityActor();
+			destinatario.setApellidos(guideInfo.getOrderComplete().getClientProfileData().getLastName());
+			destinatario.setCallePrimaria(guideInfo.getOrderComplete().getShippingData().getAddress().getStreet());
+			if(guideInfo.getOrderComplete().getShippingData().getAddress().getComplement()!=null){
+				destinatario.setCalleSecundaria(guideInfo.getOrderComplete().getShippingData().getAddress().getComplement());
+			}else{
+				destinatario.setCalleSecundaria("");
 			}
+			if(guideInfo.getOrderComplete().getClientProfileData().getDocument()!=null){
+				destinatario.setCiRuc(guideInfo.getOrderComplete().getClientProfileData().getDocument());
+			}else{
+				destinatario.setCiRuc(tramacoDefaultDocument);
+			}
+			//destinatario.setCiRuc(tramacoDefaultDocument);
+			destinatario.setTipoIden("05");
+			
+			if(guideInfo.getOrderComplete().getShippingData().getAddress().getCity()!=null){
+				String province =guideInfo.getOrderComplete().getShippingData().getAddress().getState().toUpperCase();
+				String canton = guideInfo.getOrderComplete().getShippingData().getAddress().getCity().toUpperCase();
+				List<TramacoZone> zones = tramacoZoneRepository.findByProvinciaAndCantonAndParroquia(province, canton, canton);
+				if(zones!=null && !zones.isEmpty()){
+					destinatario.setCodigoPostal(zones.get(0).getCodigo().intValue());
+				}
+				
+			}else if(guideInfo.getOrderComplete().getShippingData().getAddress().getPostalCode()!=null){
+				destinatario.setCodigoPostal(new Integer(guideInfo.getOrderComplete().getShippingData().getAddress().getPostalCode()));
+			}else{
+				destinatario.setCodigoPostal(0);
+			}
+			
+			destinatario.setEmail(guideInfo.getOrderComplete().getClientProfileData().getEmail());
+			destinatario.setNombres(guideInfo.getOrderComplete().getClientProfileData().getFirstName());
+			destinatario.setNumero(guideInfo.getOrderComplete().getShippingData().getAddress().getNumber());
+			if(guideInfo.getOrderComplete().getShippingData().getAddress().getReference()!=null){
+				destinatario.setReferencia(guideInfo.getOrderComplete().getShippingData().getAddress().getReference());
+			}else{
+				destinatario.setReferencia("");
+			}
+			if(guideInfo.getOrderComplete().getClientProfileData().getPhone()!=null){
+				destinatario.setTelefono(guideInfo.getOrderComplete().getClientProfileData().getPhone());
+			}else{
+				destinatario.setTelefono("         ");
+			}
+			entCargaDestino.setDestinatario(destinatario);
+			//*************//
+			List<EntityServicio> lstServicio = new ArrayList<>();
+			EntityServicio entServicio = new EntityServicio();
+			entServicio.setId(38); //Verificar
+			entServicio.setTipo("LIV");
+			entServicio.setCantidad(0.0);
+			lstServicio.add(entServicio);
+			entCargaDestino.setLstServicio(lstServicio);
+			
+			/********/
+			lstCargaDestino.add(entCargaDestino);
+			//*******//
+			entGen.setRemitente(remitente);
+			entGen.setLstCargaDestino(lstCargaDestino);
+			entGen.setUsuario( tramacoAuth.getRespuestaAutenticarWs().getSalidaAutenticarWs().getUsuario());  //Verificar
+		
 			
 			/**/
 			RespuestaGenerarGuiaWs respuestaGenerarGuiaWs = cliente.generarGuia(entGen);

@@ -346,6 +346,7 @@
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/vitex/json/bean/Payment.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/vitex/wsdl/ClientInsertUpdateV3Response.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/app/persistence/repository/StoreRepository.java
+/home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/base/util/BaseUtil.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/datil/json/bean/EnvioSri.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/datil/json/enums/TipoDocumentoEnum.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/vitex/wsdl/StockKeepingUnitPriceUpdateByRefId.java
