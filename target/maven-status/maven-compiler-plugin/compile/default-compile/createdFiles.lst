@@ -78,6 +78,7 @@ com/yaesta/integration/vitex/wsdl/dto/FreightDTO.class
 com/yaesta/integration/vitex/wsdl/GiftListGetTypeResponse.class
 com/yaesta/integration/vitex/wsdl/ClientGetByGuidV3.class
 com/yaesta/integration/vitex/wsdl/dto/OrderPaymentDTO.class
+com/yaesta/app/util/OrderItemUtil.class
 com/yaesta/app/persistence/service/OrderService.class
 com/yaesta/integration/vitex/json/bean/Transaction.class
 com/yaesta/integration/vitex/wsdl/UpdateNotifyShipping.class
@@ -365,6 +366,7 @@ com/yaesta/integration/vitex/wsdl/StockKeepingUnitInsertUpdateResponse.class
 com/yaesta/app/persistence/service/TableSequenceService.class
 com/yaesta/app/persistence/service/UserService.class
 com/yaesta/integration/vitex/wsdl/StockKeepingUnitComplementInsertUpdate.class
+com/yaesta/integration/tramaco/controller/TramacoIntegrationTestController.class
 com/yaesta/integration/vitex/wsdl/GiftListInsertUpdate.class
 com/yaesta/integration/vitex/wsdl/ProductGetSimilarCategory.class
 com/yaesta/integration/vitex/wsdl/ProductGetAllFromUpdatedDateAndIdResponse.class
@@ -421,6 +423,7 @@ com/yaesta/integration/vitex/wsdl/ProductInsertUpdate.class
 com/yaesta/integration/vitex/wsdl/ProductEspecificationInsertResponse.class
 com/yaesta/integration/vitex/wsdl/dto/ArrayOfOrderInvoiceDTO.class
 com/yaesta/integration/vitex/bean/GuideInfoBean.class
+com/yaesta/integration/tramaco/dto/GuideBeanDTO.class
 com/yaesta/app/mail/MailService$1.class
 com/yaesta/integration/vitex/wsdl/dto/ArrayOfIntegrationInterfaceDTO.class
 com/yaesta/app/persistence/entity/TramacoZone.class
@@ -501,6 +504,7 @@ com/yaesta/integration/vitex/json/bean/AdditionalInfo.class
 com/yaesta/integration/vitex/wsdl/GiftListGetAllFromCreatedDateAndId.class
 com/yaesta/integration/vitex/wsdl/vo/GuideVO.class
 com/yaesta/integration/vitex/wsdl/StockKeepingUnitServiceGet.class
+com/yaesta/app/persistence/vo/OrderItemBeanVO.class
 com/yaesta/integration/vitex/json/bean/Paging.class
 com/yaesta/integration/vitex/wsdl/GiftListGetByCreatedDateResponse.class
 com/yaesta/integration/vitex/wsdl/dto/ArrayOfOrderInvoiceStockKeepingUnitDTO.class

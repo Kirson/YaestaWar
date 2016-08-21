@@ -43,6 +43,9 @@ public class OrderItem implements Serializable{
 	@Column(name="unit_price")  //precio del item
 	private Double unitPrice;
 	
+	@Column(name="discount")  //descuento
+	private Double discount;
+	
 	@Column(name="quantity")  //cantidad de producto
 	private Long quantity;
 	
@@ -104,6 +107,12 @@ public class OrderItem implements Serializable{
 	@Column(name="order_date",columnDefinition="TIMESTAMP WITH TIME ZONE")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date orderDate;
+	
+	@Column(name="order_status") //estado de la orden en vitex
+	private String orderStatus;
+	
+	@Column(name="status_description") //estado de la orden en vitex
+	private String statusDescription;
 	
 
 	public Long getId() {
@@ -219,7 +228,7 @@ public class OrderItem implements Serializable{
 	}
 
 	public String getCustomerPhone() {
-		String strPhone = "\""+customerPhone;
+		String strPhone =customerPhone;
 		return strPhone;
 	}
 
@@ -252,7 +261,7 @@ public class OrderItem implements Serializable{
 	}
 
 	public String getProductKey() {
-		String strProductKey = "\""+productKey;
+		String strProductKey = productKey;
 		return strProductKey;
 	}
 
@@ -298,6 +307,30 @@ public class OrderItem implements Serializable{
 
 	public void setUnitPrice(Double unitPrice) {
 		this.unitPrice = unitPrice;
+	}
+
+	public String getOrderStatus() {
+		return orderStatus;
+	}
+
+	public void setOrderStatus(String orderStatus) {
+		this.orderStatus = orderStatus;
+	}
+
+	public String getStatusDescription() {
+		return statusDescription;
+	}
+
+	public void setStatusDescription(String statusDescription) {
+		this.statusDescription = statusDescription;
+	}
+
+	public Double getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(Double discount) {
+		this.discount = discount;
 	}
 	
 	
