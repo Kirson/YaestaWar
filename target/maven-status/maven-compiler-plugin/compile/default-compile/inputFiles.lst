@@ -388,6 +388,7 @@
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/vitex/wsdl/dto/StoreDTO.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/datil/json/bean/ItemGuiaRemision.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/vitex/wsdl/StockKeepingUnitGetByManufacturerCodeResponse.java
+/home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/vitex/bean/GuideContainerBean.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/tramaco/dto/TramacoAuthDTO.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/vitex/wsdl/ImageListByStockKeepingUnitIdResponse.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/vitex/json/bean/To.java

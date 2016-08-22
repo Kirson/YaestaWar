@@ -116,6 +116,7 @@ com/yaesta/integration/datil/json/bean/Establecimiento.class
 com/yaesta/integration/vitex/json/bean/Item.class
 com/yaesta/integration/vitex/wsdl/dto/GiftListMemberDTO.class
 com/yaesta/integration/vitex/wsdl/OrderStatusGetAll.class
+com/yaesta/integration/vitex/bean/GuideContainerBean.class
 com/yaesta/integration/vitex/wsdl/ProductEspecificationInsertByListFieldIdsResponse.class
 com/yaesta/integration/vitex/json/bean/ShippingData.class
 com/yaesta/app/mail/MailParticipant.class
