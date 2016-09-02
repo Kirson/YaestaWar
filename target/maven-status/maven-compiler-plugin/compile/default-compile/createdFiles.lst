@@ -53,6 +53,7 @@ com/yaesta/integration/vitex/wsdl/OrderGetByClientCpf.class
 com/yaesta/integration/vitex/wsdl/base/package-info.class
 com/yaesta/integration/vitex/wsdl/StockKeepingUnitGetByRefId.class
 com/yaesta/integration/vitex/wsdl/dto/ArrayOfStockKeepingUnitFieldNameDTO.class
+com/yaesta/app/persistence/vo/ParroquiaVO.class
 com/yaesta/integration/vitex/wsdl/StockKeepingUnitGetAllByProduct.class
 com/yaesta/integration/vitex/wsdl/dto/OrderStatusDTO.class
 com/yaesta/integration/vitex/service/OrderStatusVitexService.class
@@ -124,6 +125,7 @@ com/yaesta/app/mail/MailParticipant.class
 com/yaesta/integration/vitex/wsdl/GiftListSkuDeleteByList.class
 com/yaesta/integration/vitex/wsdl/GiftCardGetResponse.class
 com/yaesta/integration/vitex/wsdl/ServicePriceInsertUpdateResponse.class
+com/yaesta/app/persistence/vo/CantonVO.class
 com/yaesta/integration/vitex/json/bean/Facets_.class
 com/yaesta/integration/vitex/wsdl/GiftListSkuSetPurchasedResponse.class
 com/yaesta/integration/datil/json/bean/Transportista.class
@@ -209,6 +211,7 @@ com/yaesta/integration/datil/json/bean/EnvioSri.class
 com/yaesta/integration/vitex/json/bean/Stats.class
 com/yaesta/app/persistence/entity/Guide.class
 com/yaesta/integration/vitex/wsdl/ServiceGet.class
+com/yaesta/app/persistence/controller/TramacoZoneController.class
 com/yaesta/app/persistence/entity/SupplierContact.class
 com/yaesta/integration/vitex/wsdl/GiftListSkuDeleteResponse.class
 com/yaesta/integration/vitex/wsdl/dto/GiftListDTO.class
@@ -489,6 +492,7 @@ com/yaesta/integration/vitex/wsdl/dto/ArrayOfOrderStatusDTO.class
 com/yaesta/app/task/ScheduledTasks.class
 com/yaesta/integration/vitex/wsdl/GiftListGetByCreatedDate.class
 com/yaesta/integration/vitex/wsdl/StockKeepingUnitEspecificationListBySkuId.class
+com/yaesta/app/persistence/vo/ProvinciaVO.class
 com/yaesta/integration/datil/json/bean/Comprador.class
 com/yaesta/integration/vitex/wsdl/dto/ArrayOfStockKeepingUnitDTO.class
 com/yaesta/integration/vitex/wsdl/GiftCardInsertUpdateResponse.class

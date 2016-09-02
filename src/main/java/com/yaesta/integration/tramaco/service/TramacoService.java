@@ -507,6 +507,7 @@ public class TramacoService implements Serializable{
 							gbd.setDeliveryCost(deliveryCost);
 							gbd.setDeliveryPayment(deliveryPayment);
 							gbd.setSupplier(sdi.getSupplier());
+							gbd.setItemList(sdi.getItems());
 							guideInfo.getGuideBeanList().add(gbd);
 							
 						}
@@ -686,11 +687,15 @@ public class TramacoService implements Serializable{
 					System.out.println("CODIGO:"+ respuestaTrackGuiaWs.getCuerpoRespuesta().getCodigo());
 					System.out.println("MENSAJE:" +	respuestaTrackGuiaWs.getCuerpoRespuesta().getMensaje());
 					System.out.println("EXCEPCION:" +respuestaTrackGuiaWs.getCuerpoRespuesta().getExcepcion());
+					
 				}
 				if (respuestaTrackGuiaWs.getLstSalidaTrackGuiaWs() != null) {
 					for (SalidaTrackGuiaWs trackGuia : respuestaTrackGuiaWs.getLstSalidaTrackGuiaWs()) {
-						System.out.println("FECHA_HORA:" + trackGuia.getFechaHora() + " DESCRIPCION:" +trackGuia.getDescripcion());
+						System.out.println("FECHA_HORA:" + trackGuia.getFechaHora() + " DESCRIPCION:" +trackGuia.getDescripcion() );
+						 
 					}
+					
+					System.out.println("COORDENADAS:" + respuestaTrackGuiaWs.getTransaccion().getLatitud() + ":" + respuestaTrackGuiaWs.getTransaccion().getLongitud());
 				}
 				guideInfo.getGuideBean().setGuideTrackResponse(respuestaTrackGuiaWs);
 			}

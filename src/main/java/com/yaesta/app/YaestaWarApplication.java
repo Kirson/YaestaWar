@@ -12,7 +12,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableAutoConfiguration
 @ComponentScan(basePackages = {"com.yaesta"})
 @Configuration
-public class YaestaWarApplication extends VitexSoapClient {
+public class YaestaWarApplication extends YaestaSoapClient {
 
 	/**
 	 * Serial Version
