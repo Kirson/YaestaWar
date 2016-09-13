@@ -18,7 +18,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "guide",schema="yaesta")
@@ -101,13 +101,28 @@ public class Guide implements Serializable{
 	@Column(name="delivery_name")
 	private String deliveryName;
 	
-	@JsonManagedReference
+	@Column(name="customer_name")
+	private String customerName;
+	
+	@JsonBackReference(value="guide-supplier")
 	@JoinColumn(name = "supplier_id", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
 	private Supplier supplier;
 	
+	@Column(name="delivery_scheduled_date",columnDefinition="TIMESTAMP WITH TIME ZONE")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date deliveryScheduledDate;
+	
+	@JsonBackReference(value="guide-guideStatus")
+	@JoinColumn(name = "guide_status_id", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+	private Catalog guideStatus;
+	
 	@Transient
 	private List<GuideDetail> details;
+	
+	@Transient
+	private String guideId;
 
 	public Long getId() {
 		return id;
@@ -299,12 +314,55 @@ public class Guide implements Serializable{
 	
 	
 
+	public String getCustomerName() {
+		return customerName;
+	}
+
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
+
 	public String getDeliveryName() {
 		return deliveryName;
 	}
 
 	public void setDeliveryName(String deliveryName) {
 		this.deliveryName = deliveryName;
+	}
+	
+	
+	
+
+	public Date getDeliveryScheduledDate() {
+		return deliveryScheduledDate;
+	}
+
+	public void setDeliveryScheduledDate(Date deliveryScheduledDate) {
+		this.deliveryScheduledDate = deliveryScheduledDate;
+	}
+	
+	
+
+	public Catalog getGuideStatus() {
+		return guideStatus;
+	}
+
+	public void setGuideStatus(Catalog guideStatus) {
+		this.guideStatus = guideStatus;
+	}
+
+	public String getGuideId() {
+		try{
+			String [] gIds=this.vitexDispatcherId.split("%");
+			guideId=gIds[1];
+		}catch(Exception e){
+			System.out.println("Exception es "+e);
+		}
+		return guideId;
+	}
+
+	public void setGuideId(String guideId) {
+		this.guideId = guideId;
 	}
 
 	@Override

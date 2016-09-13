@@ -14,6 +14,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -85,6 +86,7 @@ public class Supplier implements Serializable{
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateUpd;
 	
+	@JsonBackReference(value="supplier-country")
 	@JoinColumn(name = "country_id", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
 	private Catalog country;
@@ -120,14 +122,17 @@ public class Supplier implements Serializable{
 	@Column(name="found")
 	private Boolean found;
 	
+	@JsonBackReference(value="supplier-category")
 	@JoinColumn(name = "category_id", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
 	private Catalog category;
 	
+	@JsonBackReference(value="supplier-bank")
 	@JoinColumn(name = "bank_id", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
 	private Catalog bank;
 	
+	@JsonBackReference(value="supplier-accountType")
 	@JoinColumn(name = "account_type_id", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
 	private Catalog accountType;
@@ -144,19 +149,35 @@ public class Supplier implements Serializable{
 	@Column(name="is_new")
 	private Boolean isNew;
 	
+	@JsonBackReference(value="supplier-productListStatus")
 	@JoinColumn(name = "product_list_status_id", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
 	private Catalog productListStatus;
 	
+	@JsonBackReference(value="supplier-status")
 	@JoinColumn(name = "supplier_status_id", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
 	private Catalog supplierStatus;
+	
+	@JsonBackReference(value="supplier-priority")
+	@JoinColumn(name = "priority_id", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+	private Catalog priority;
+	
+	@JsonBackReference(value="supplier-supplierType")
+	@JoinColumn(name = "supplier_type_id", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+	private Catalog supplierType;
+	
+	@Column(name="is_warehouse")
+	private Boolean isWarehouse;
 	
 	@Transient
 	private String shippingAddress;
 	
 	public Supplier(){
 		isNew = Boolean.TRUE;
+		isWarehouse = Boolean.FALSE;
 	}
 
 	public Long getId() {
@@ -504,6 +525,34 @@ public class Supplier implements Serializable{
 
 	public void setSupplierStatus(Catalog supplierStatus) {
 		this.supplierStatus = supplierStatus;
+	}
+	
+	
+
+	public Catalog getPriority() {
+		return priority;
+	}
+
+	public void setPriority(Catalog priority) {
+		this.priority = priority;
+	}
+
+	public Boolean getIsWarehouse() {
+		return isWarehouse;
+	}
+
+	public void setIsWarehouse(Boolean isWarehouse) {
+		this.isWarehouse = isWarehouse;
+	}
+	
+	
+
+	public Catalog getSupplierType() {
+		return supplierType;
+	}
+
+	public void setSupplierType(Catalog supplierType) {
+		this.supplierType = supplierType;
 	}
 
 	@Override
