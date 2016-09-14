@@ -46,6 +46,7 @@ com/yaesta/integration/vitex/wsdl/OrderStatusGetAllResponse.class
 com/yaesta/integration/vitex/wsdl/dto/StockKeepingUnitQuantityDTO.class
 com/yaesta/app/persistence/controller/SupplierController.class
 com/yaesta/integration/datil/json/bean/NotaCreditoRespuesta.class
+com/yaesta/app/persistence/vo/UserVO.class
 com/yaesta/integration/tcc/service/TccService.class
 com/yaesta/app/persistence/vo/SupplierBeanVO.class
 com/yaesta/integration/vitex/json/bean/Marketplace_.class
@@ -153,6 +154,7 @@ com/yaesta/integration/laarcourier/service/LaarCourierService.class
 com/yaesta/integration/vitex/wsdl/dto/IntegrationErrorDTO.class
 com/yaesta/integration/vitex/json/bean/OrderSchema.class
 com/yaesta/integration/datil/json/bean/ItemGuiaRemision.class
+com/yaesta/app/persistence/vo/TramacoZoneVO.class
 com/yaesta/integration/vitex/wsdl/ClientGetByCPF.class
 com/yaesta/integration/vitex/wsdl/OrderChangeTrackingNumberV3Response.class
 com/yaesta/integration/vitex/wsdl/dto/PaymentDTO.class
@@ -225,6 +227,7 @@ com/yaesta/integration/vitex/wsdl/IntegrationSettings.class
 com/yaesta/app/persistence/repository/SupplierRepository.class
 com/yaesta/integration/vitex/service/OrderVitexService.class
 com/yaesta/integration/vitex/json/bean/OrderConversation.class
+com/yaesta/app/persistence/vo/CoberturaTCCVO.class
 com/yaesta/integration/datil/json/bean/Error.class
 com/yaesta/integration/datil/json/bean/Mensaje.class
 com/yaesta/integration/laarcourier/wsdl/WayBillResponse.class
@@ -254,6 +257,7 @@ com/yaesta/app/persistence/vo/ClientWarehouseVO.class
 com/yaesta/app/persistence/entity/Proveedor.class
 com/yaesta/integration/vitex/wsdl/StockKeepingUnitImageRemoveByNameResponse.class
 com/yaesta/integration/vitex/wsdl/IntegrationLog.class
+com/yaesta/app/persistence/controller/CoberturaTccController.class
 com/yaesta/integration/vitex/wsdl/GiftListGet.class
 com/yaesta/integration/vitex/wsdl/GiftListGetByModifiedDate.class
 com/yaesta/integration/vitex/wsdl/dto/IntegrationDTO.class
@@ -601,6 +605,7 @@ com/yaesta/integration/tcc/wsdl/ClsDespachoPaqueteriaDetalle.class
 com/yaesta/app/YaestaWarApplication.class
 com/yaesta/integration/vitex/wsdl/dto/StockKeepingUnitDTO.class
 com/yaesta/app/persistence/controller/GuideController.class
+com/yaesta/app/persistence/controller/UserController.class
 com/yaesta/integration/vitex/wsdl/StockKeepingUnitActiveResponse.class
 com/yaesta/integration/vitex/wsdl/IntegrationSettingsResponse.class
 com/yaesta/integration/vitex/wsdl/ProductEspecificationInsertByListResponse.class
@@ -624,6 +629,7 @@ com/yaesta/integration/tcc/wsdl/TpUnidad.class
 com/yaesta/app/persistence/entity/User.class
 com/yaesta/integration/vitex/wsdl/ClientInsertUpdateV3Response.class
 com/yaesta/integration/tcc/wsdl/AnularDespachoResponse.class
+com/yaesta/app/persistence/controller/YaEstaLogController.class
 com/yaesta/integration/vitex/wsdl/package-info.class
 com/yaesta/app/persistence/repository/OrderRepository.class
 com/yaesta/integration/vitex/util/CategoryVtexUtil.class
