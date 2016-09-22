@@ -10,7 +10,8 @@ public enum PaymentEnum {
 	TARJETA_ALIA("Tarjeta Alia"),
 	TARJETA_CREDITO("Tarjeta de credito"),
 	TRANSFERENCIA_BANCARIA_OTRAS_ENTIDADES("TRANSFERENCIA BANCARIA (OTRAS ENTIDADES)"),
-	CONSIGNACION_BANCARIA("Consignación Bancaria");
+	CONSIGNACION_BANCARIA("Consignación Bancaria"),
+	TRANSFERENCIA_BANCARIA("Transferencia Bancaria");
 	
 	String paymentSystemName;
 	
