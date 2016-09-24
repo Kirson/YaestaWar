@@ -583,6 +583,7 @@
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/vitex/wsdl/ProductActive.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/vitex/wsdl/StockKeepingUnitImageRemoveByName.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/app/persistence/vo/UserVO.java
+/home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/app/persistence/vo/TableSequenceResponseVO.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/vitex/wsdl/dto/GiftCardDTO.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/vitex/wsdl/GiftListGetByClientCpfResponse.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/vitex/wsdl/StockKeepingUnitGetAllFromUpdatedDateAndIdResponse.java

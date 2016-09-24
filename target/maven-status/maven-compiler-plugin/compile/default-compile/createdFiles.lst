@@ -522,6 +522,7 @@ com/yaesta/integration/vitex/wsdl/WareHouseIStockableGetByStockKeepingUnit.class
 com/yaesta/integration/datil/json/bean/FacturaSRI.class
 com/yaesta/integration/vitex/json/bean/ItemComplete.class
 com/yaesta/integration/vitex/wsdl/StockKeepingUnitPriceUpdateResponse.class
+com/yaesta/app/persistence/vo/TableSequenceResponseVO.class
 com/yaesta/integration/vitex/wsdl/BrandGetResponse.class
 com/yaesta/integration/vitex/wsdl/GiftListGetByClientEmail.class
 com/yaesta/integration/vitex/wsdl/dto/FreightScheduledDateOptionDTO.class

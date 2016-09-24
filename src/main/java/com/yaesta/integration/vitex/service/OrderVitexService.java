@@ -133,7 +133,7 @@ public class OrderVitexService extends BaseVitexService {
 	private TramacoService tramacoService;
 	
 	@Autowired
-	private TccService tccService;
+	TccService tccService;
 	
 	@Autowired
 	private MailService mailService;
@@ -637,9 +637,9 @@ public class OrderVitexService extends BaseVitexService {
 	
 	public GuideContainerBean generateGuides(GuideInfoBean guideInfoBean){
 		
-		if(guideInfoBean.getDeliveryName().equals("TRAMACO")){
+		if(guideInfoBean.getDeliverySelected().getNemonic().equals("TRAMACO")){
 			return generateGuidesTramaco(guideInfoBean);
-		}else if(guideInfoBean.getDeliveryName().equals("TCC")){
+		}else if(guideInfoBean.getDeliverySelected().getNemonic().equals("TCC")){
 		    return generateGuidesTcc(guideInfoBean);	
 		}else{
 			return new GuideContainerBean();
@@ -661,6 +661,7 @@ public class OrderVitexService extends BaseVitexService {
 		GuideDTO guideDTO = new GuideDTO();
 		guideDTO.setOrderComplete(orderComplete);
 		guideDTO.setCustomerAdditionalInfo(guideInfoBean.getCustomerAdditionalInfo());
+		guideDTO.setDeliverySelected(guideInfoBean.getDeliverySelected());
 		
 		GuideDTO resultGuideInfo = tramacoService.generateGuides(guideDTO);
 		
