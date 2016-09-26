@@ -32,6 +32,9 @@ import com.yaesta.app.mail.ItemInfo;
 import com.yaesta.app.mail.MailInfo;
 import com.yaesta.app.mail.MailParticipant;
 import com.yaesta.app.mail.MailService;
+import com.yaesta.app.pdf.BuildGuidePDF;
+import com.yaesta.app.pdf.bean.GuideDataBean;
+import com.yaesta.app.pdf.bean.ItemData;
 import com.yaesta.app.persistence.entity.Catalog;
 import com.yaesta.app.persistence.entity.Customer;
 import com.yaesta.app.persistence.entity.Guide;
@@ -51,8 +54,11 @@ import com.yaesta.app.util.SupplierUtil;
 import com.yaesta.app.util.UtilDate;
 import com.yaesta.integration.base.enums.DeliveryEnum;
 import com.yaesta.integration.base.util.BaseUtil;
+import com.yaesta.integration.datil.json.bean.Destinatario;
 import com.yaesta.integration.datil.json.bean.FacturaConsulta;
 import com.yaesta.integration.datil.json.bean.FacturaRespuestaSRI;
+import com.yaesta.integration.datil.json.bean.GuiaRemisionRespuesta;
+import com.yaesta.integration.datil.json.bean.ItemGuiaRemision;
 import com.yaesta.integration.datil.json.enums.PagoEnum;
 import com.yaesta.integration.datil.service.DatilService;
 import com.yaesta.integration.tcc.service.TccService;
@@ -63,6 +69,7 @@ import com.yaesta.integration.vitex.bean.GuideContainerBean;
 import com.yaesta.integration.vitex.bean.GuideInfoBean;
 import com.yaesta.integration.vitex.bean.InvoiceSchemaBean;
 import com.yaesta.integration.vitex.bean.SupplierDeliveryInfo;
+import com.yaesta.integration.vitex.bean.WayBillSchema;
 import com.yaesta.integration.vitex.json.bean.CategoryVtex;
 import com.yaesta.integration.vitex.json.bean.InvoiceResponse;
 import com.yaesta.integration.vitex.json.bean.InvoiceSchema;
@@ -168,6 +175,13 @@ public class OrderVitexService extends BaseVitexService {
 	private @Value("${tramaco.contacts.names}") String tramacoContactsNames;
 	private @Value("${datil.iva.value}") String datilIvaValue;
 	private @Value("${datil.iva.percent.value}") String datilIvaPercentValue;
+	private @Value("${datil.establishment.code}") String datilEstablishmentCode;
+	private @Value("${datil.emission.code}") String datilEmissionCode;
+	private @Value("${guide.prefix}") String guidePrefix;
+	private @Value("${moto.pdf.path}") String motoExpressPdfPath;
+	private @Value("${internal.pdf.path}") String internalPdfPath;
+	private @Value("${cyclist.pdf.path}") String cyclistPdfPath;
+	private @Value("${mail.path.logo.image}") String logoPath;
 
 	public OrderVitexService() throws Exception {
 		super();
@@ -641,7 +655,11 @@ public class OrderVitexService extends BaseVitexService {
 			return generateGuidesTramaco(guideInfoBean);
 		}else if(guideInfoBean.getDeliverySelected().getNemonic().equals("TCC")){
 		    return generateGuidesTcc(guideInfoBean);	
-		}else{
+		}else if(guideInfoBean.getDeliverySelected().getNemonic().equals("MOTO_EXPRESS")  || 
+				 guideInfoBean.getDeliverySelected().getNemonic().equals("DESPACHO_INTERNO")){
+		    return generateGuideStandar(guideInfoBean);	
+		}
+		else{
 			return new GuideContainerBean();
 		}
 	}
@@ -718,7 +736,7 @@ public class OrderVitexService extends BaseVitexService {
 		
 		result.setGuides(responseList);
 		
-		List<MailInfo> mailInfoList= prepareMailOrder(orderComplete,supplierDeliveryInfoList);
+		List<MailInfo> mailInfoList= prepareMailOrder(orderComplete,supplierDeliveryInfoList,guideInfoBean.getDeliverySelected());
 		
 		for(MailInfo mailInfo:mailInfoList){
 			for(GuideBeanDTO gDto:guideDTO.getGuideBeanList()){
@@ -733,6 +751,8 @@ public class OrderVitexService extends BaseVitexService {
 	}
 	
 	private GuideContainerBean generateGuidesTcc(GuideInfoBean guideInfoBean){
+		
+		System.out.println("Inicio guias TCC");
 		GuideContainerBean result = new GuideContainerBean(); 
 		GuideInfoBean response = guideInfoBean;
 		List<GuideDTO> responseList = new ArrayList<GuideDTO>();
@@ -747,6 +767,7 @@ public class OrderVitexService extends BaseVitexService {
 		GuideDTO guideDTO = new GuideDTO();
 		guideDTO.setOrderComplete(orderComplete);
 		guideDTO.setCustomerAdditionalInfo(guideInfoBean.getCustomerAdditionalInfo());
+		guideDTO.setDeliverySelected(guideInfoBean.getDeliverySelected());
 		
 		GuideDTO resultGuideInfo = tccService.generateGuides(guideDTO);
 		
@@ -803,8 +824,8 @@ public class OrderVitexService extends BaseVitexService {
 		result.setGuideInfoBean(response);
 		
 		result.setGuides(responseList);
-		
-		List<MailInfo> mailInfoList= prepareMailOrder(orderComplete,supplierDeliveryInfoList);
+		/*
+		List<MailInfo> mailInfoList= prepareMailOrder(orderComplete,supplierDeliveryInfoList,guideInfoBean.getDeliverySelected());
 		
 		for(MailInfo mailInfo:mailInfoList){
 			for(GuideBeanDTO gDto:guideDTO.getGuideBeanList()){
@@ -814,7 +835,7 @@ public class OrderVitexService extends BaseVitexService {
 			}
 			mailService.sendMailTemplate(mailInfo, "guideNotification.vm");	
 		}
-		
+		*/
 		return result;
 	}
 
@@ -906,8 +927,178 @@ public class OrderVitexService extends BaseVitexService {
 		return response;
 	}
 	
+	private GuideContainerBean generateGuideStandar(GuideInfoBean guideInfoBean){
+		GuideContainerBean result = new GuideContainerBean();
+		
+		if(guideInfoBean.getDeliverySelected().getNemonic().equals("MOTO_EXPRESS")){
+			return generateGuideMotoExpress(guideInfoBean);
+		}else if(guideInfoBean.getDeliverySelected().getNemonic().equals("DESPACHO_INTERNO")){
+			return generateGuideMotoInternal(guideInfoBean);
+		}else if(guideInfoBean.getDeliverySelected().getNemonic().equals("CICLISTA")){
+			return generateGuideCyclist(guideInfoBean);
+		}
+		
+		return result;
+	}
 	
-	private List<MailInfo> prepareMailOrder(OrderComplete orderComplete,List<SupplierDeliveryInfo> supplierDeliveryInfoList){
+	private GuideContainerBean generateGuideCyclist(GuideInfoBean guideInfoBean){
+		GuideContainerBean result = new GuideContainerBean();
+		//WayBillSchema response = datilService.processWayBill(guideInfoBean.getOrderComplete(), guideInfoBean.getDeliverySelected(), "SEQ_WAYBILL_CYCLIST");
+		WayBillSchema response = datilService.processWayBill(guideInfoBean.getOrderComplete(), guideInfoBean.getDeliverySelected(), "SEQ_WAYBILL");
+		result = processStandarGuide(response, guideInfoBean.getOrderComplete(),guideInfoBean.getDeliverySelected(),guideInfoBean.getSupplierDeliveryInfoList());
+		return result;
+	}
+	
+	private GuideContainerBean generateGuideMotoExpress(GuideInfoBean guideInfoBean){
+		GuideContainerBean result = new GuideContainerBean();
+		//WayBillSchema response = datilService.processWayBill(guideInfoBean.getOrderComplete(), guideInfoBean.getDeliverySelected(), "SEQ_WAYBILL_MOTOEXPRESS");
+		WayBillSchema response = datilService.processWayBill(guideInfoBean.getOrderComplete(), guideInfoBean.getDeliverySelected(), "SEQ_WAYBILL");
+		result = processStandarGuide(response, guideInfoBean.getOrderComplete(),guideInfoBean.getDeliverySelected(),guideInfoBean.getSupplierDeliveryInfoList());
+		return result;
+	}
+	
+	private GuideContainerBean generateGuideMotoInternal(GuideInfoBean guideInfoBean){
+		GuideContainerBean result = new GuideContainerBean();
+		//WayBillSchema response = datilService.processWayBill(guideInfoBean.getOrderComplete(), guideInfoBean.getDeliverySelected(), "SEQ_WAYBILL_INTERNAL");
+		WayBillSchema response = datilService.processWayBill(guideInfoBean.getOrderComplete(), guideInfoBean.getDeliverySelected(), "SEQ_WAYBILL");
+		result = processStandarGuide(response, guideInfoBean.getOrderComplete(),guideInfoBean.getDeliverySelected(),guideInfoBean.getSupplierDeliveryInfoList());
+		return result;
+	}
+	
+	private GuideContainerBean processStandarGuide(WayBillSchema wayBill, OrderComplete orderComplete, Catalog delivery, List<SupplierDeliveryInfo> supplierDeliveryInfoList){
+		GuideContainerBean result = new GuideContainerBean();
+		
+		Order order = orderService.findByVitexId(orderComplete.getOrderId());
+		if(wayBill!=null){
+			List<GuideBeanDTO> guideInfoBeanList = new ArrayList<GuideBeanDTO>();
+			for(GuiaRemisionRespuesta grr:wayBill.getGuideList()){
+				GuideBeanDTO gbd = new GuideBeanDTO();
+				Guide guide = new Guide();
+				guide.setCreateDate(new Date());
+				guide.setOrder(order);
+				guide.setOrderVitexId(orderComplete.getOrderId());
+				guide.setVitexDispatcherId(grr.getId());
+				guide.setGuideInfo(new Gson().toJson(grr));
+				guide.setOrder(order);
+				guide.setDeliveryName(delivery.getNemonic());
+				//guide.setDeliveryCost(grr.get);
+				//guide.setDeliveryPayment(gbd.getDeliveryPayment());
+				//guide.setItemValue(grr.get);
+				guide.setDeliveryStatus("GENERATED-PDF");
+				guide.setStatus("GENERATED-PDF");
+				guide.setOrderStatus(orderComplete.getStatus());
+				guide.setAccessCode(grr.getClaveAcceso());;
+				guide.setSerial(grr.getSecuencial()+"");
+				try{
+					Long idSup = new Long(grr.getInformacionAdicional().getIdProveedor());
+					Supplier supp = supplierService.findById(idSup);
+				
+					guide.setSupplier(supp);
+					gbd.setSupplier(supp);
+				}catch(Exception e)
+				{
+					e.printStackTrace();
+				}
+				guide.setCustomerName(orderComplete.getCustomerName());
+				try {
+					guide.setOrderDate(UtilDate.fromIsoToDateTime(orderComplete.getCreationDate()));
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				String pdfURL = "";
+				
+				if(delivery.getNemonic().equals("MOTO_EXPRESS")){
+					pdfURL = motoExpressPdfPath;
+				}else if(delivery.getNemonic().equals("DESPACHO_INTERNO")){
+					pdfURL = internalPdfPath;
+				}else if(delivery.getNemonic().equals("CICLISTA")){
+					pdfURL = cyclistPdfPath;
+				}
+				
+				GuideDataBean gdb = new GuideDataBean();
+				pdfURL = pdfURL+guidePrefix+ delivery.getNemonic() +"_"+grr.getSecuencial()+"_"+".pdf";
+				gdb.setPdfPath(pdfURL);
+				gbd.setPdfUrl(pdfURL);
+				gdb.setLogoPath(logoPath);
+				gdb.setOrderId(orderComplete.getOrderId());
+				guide.setDocumentUrl(pdfURL);
+				List<ItemData> itemDataList = new ArrayList<ItemData>();
+				for(Destinatario des:grr.getDestinatarios()){
+					for(ItemGuiaRemision igr: des.getItems()){
+						ItemData id = new ItemData();
+						id.setCode(igr.getCodigoPrincipal());
+						id.setName(igr.getDescripcion());
+						id.setQuantity(igr.getCantidad()+"");
+						itemDataList.add(id);
+					}
+				}
+				gdb.setItemDataList(itemDataList);
+				List<String> strList = new ArrayList<String>();
+				strList.add(" ");
+				String str = "Guia # "+ formatGuideNumber(grr.getSecuencial()+"");
+				strList.add(str);
+				String courier = "Courier "+delivery.getName();
+				strList.add(courier);
+				String strPaymentForm = "Forma de pago: "+ grr.getInformacionAdicional().getFormaPago();
+				strList.add(strPaymentForm);
+				String strPayment = "Valor a cobrar: "+grr.getInformacionAdicional().getValorACobrar();
+				strList.add(strPayment);
+				strList.add("______________________________________________");
+				strList.add(" ");
+				
+				String supplierName = "Origen [Proveedor]: "+gbd.getSupplier().getName() + " ";  
+				strList.add(supplierName);
+				String supplierAddress = "Direccion: "+gbd.getSupplier().getAddress();
+				strList.add(supplierAddress);
+				String supplierContact = "Contacto: "+gbd.getSupplier().getContactName() + " " + gbd.getSupplier().getContactLastName();
+				strList.add(supplierContact);
+				String supplierAux = "Email: " + gbd.getSupplier().getContactEmail();
+				strList.add(supplierAux);
+				strList.add("______________________________________________");
+				strList.add(" ");
+				
+				String customer = "Destinatario [Cliente]:" + orderComplete.getCustomerName();
+				strList.add(customer);
+				String customerAddress = "Direccion: "+orderComplete.getShippingData().getAddress().getState() + " " + orderComplete.getShippingData().getAddress().getCity();
+				customerAddress = customerAddress + " " + orderComplete.getShippingData().getAddress().getStreet();
+				customerAddress = customerAddress + " " + orderComplete.getShippingData().getAddress().getReference();
+				strList.add(customerAddress);
+				String email = "Email: " + orderComplete.getClientProfileData().getEmail();
+				strList.add(email);
+				String phone = "Telefono: "+ orderComplete.getClientProfileData().getPhone();
+				strList.add(phone);
+				strList.add("______________________________________________");
+				strList.add(" ");
+				gdb.setParagraphs(strList);
+				guideService.saveGuide(guide);
+				
+				gdb= BuildGuidePDF.generateGuidePDF(gdb);
+				guideInfoBeanList.add(gbd);
+			}//fin for
+			
+			List<MailInfo> mailInfoList= prepareMailOrder(orderComplete,supplierDeliveryInfoList,delivery);
+			
+			for(MailInfo mailInfo:mailInfoList){
+				for(GuideBeanDTO gDto:guideInfoBeanList){
+					if(gDto.getSupplier().getId().longValue()==mailInfo.getRefId().longValue()){
+						System.out.println("A "+gDto.getSupplier().getId());
+						System.out.println("A1 "+gDto.getPdfUrl());
+						mailInfo.getAttachmentList().add(gDto.getPdfUrl());
+					}else{
+						System.out.println("B "+gDto.getSupplier().getId());
+					}
+				}
+				mailService.sendMailTemplate(mailInfo, "guideNotification.vm");	
+			}
+		}
+		
+		return result;
+	}
+	
+	
+	private List<MailInfo> prepareMailOrder(OrderComplete orderComplete,List<SupplierDeliveryInfo> supplierDeliveryInfoList, Catalog delivery){
 		
 		List<MailInfo> mailInfoList= new ArrayList<MailInfo>();
 		
@@ -932,7 +1123,9 @@ public class OrderVitexService extends BaseVitexService {
 			mpCc.setEmail(mailCc);
 			mpCc.setName(mailCcName);
 			receiverTotal.add(mpCc);
-			if( sdi.getDelivery()!=null && sdi.getDelivery().getNemonic().equals(DeliveryEnum.TRAMACO.getNemonic())){
+			
+			//if( sdi.getDelivery()!=null && sdi.getDelivery().getNemonic().equals(DeliveryEnum.TRAMACO.getNemonic())){
+			if( delivery!=null && delivery.getNemonic().equals(DeliveryEnum.TRAMACO.getNemonic())){
 				String[] contactsCourierNames = tramacoContactsNames.split("%");
 				String[] contactsCourierEmails = tramacoContacts.split("%");
 			
@@ -987,7 +1180,7 @@ public class OrderVitexService extends BaseVitexService {
 			receiverTotal.addAll(recSupplierList);	
 			mailInfo.setReceivers(receiverTotal);
 			String strMailTextGuide = mailTextGuide;
-			strMailTextGuide = strMailTextGuide.replace(mailTextGuideToken, determineDeliveryName(sdi.getDelivery()));
+			strMailTextGuide = strMailTextGuide.replace(mailTextGuideToken, determineDeliveryName(delivery));
 			mailInfo.setGeneralText(strMailTextGuide);
 			mailInfo.setRefId(supplier.getId());
 			mailInfo.setRefVtexId(orderComplete.getOrderId());
@@ -1299,6 +1492,16 @@ public class OrderVitexService extends BaseVitexService {
 			}
 		}
 		return result;
+	}
+	
+	private String formatGuideNumber(String sequence){
+		while(sequence.length()<9){
+			sequence="0"+sequence;
+		}
+		
+		sequence=datilEstablishmentCode+"-"+datilEmissionCode+"-"+sequence;
+		
+		return sequence;
 	}
   
 }

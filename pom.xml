@@ -119,6 +119,20 @@
     		<artifactId>json</artifactId>
     		<version>20160212</version>
 		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.apache.xmlgraphics/fop -->
+		<dependency>
+    		<groupId>org.apache.xmlgraphics</groupId>
+    		<artifactId>fop</artifactId>
+    		<version>2.1</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/com.itextpdf/itextpdf -->
+		<dependency>
+    		<groupId>com.itextpdf</groupId>
+    		<artifactId>itextpdf</artifactId>
+    		<version>5.5.9</version>
+		</dependency>
     	
 		<dependency>
     		<groupId>dmz.comercial.servicio.cliente</groupId>

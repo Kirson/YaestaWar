@@ -161,6 +161,7 @@ com/yaesta/integration/vitex/wsdl/ClientGetByCPF.class
 com/yaesta/integration/vitex/wsdl/OrderChangeTrackingNumberV3Response.class
 com/yaesta/integration/vitex/wsdl/dto/PaymentDTO.class
 com/yaesta/integration/vitex/controller/VitexIntegrationController.class
+com/yaesta/app/pdf/TableBuilder.class
 com/yaesta/integration/vitex/wsdl/GiftCardGetByRedeptionCodeResponse.class
 com/yaesta/integration/vitex/wsdl/OrderGet.class
 com/yaesta/integration/tcc/wsdl/GrabarDespacho4Response.class
@@ -170,6 +171,7 @@ com/yaesta/integration/vitex/wsdl/dto/ArrayOfOrderItemDiscountDTO.class
 com/yaesta/app/persistence/repository/TableSequenceRepository.class
 com/yaesta/app/persistence/repository/CategoryRepository.class
 com/yaesta/integration/vitex/wsdl/StockKeepingUnitGetByManufacturerCode.class
+com/yaesta/app/pdf/BuildGuidePDF.class
 com/yaesta/integration/vitex/json/bean/Stats_.class
 com/yaesta/integration/vitex/wsdl/CategoryGetResponse.class
 com/yaesta/integration/vitex/wsdl/GiftListGetByClientEmailResponse.class
@@ -222,6 +224,7 @@ com/yaesta/integration/laarcourier/controller/LaarCourierTestController.class
 com/yaesta/app/persistence/vo/EmailVO.class
 com/yaesta/app/persistence/repository/BrandRepository.class
 com/yaesta/integration/vitex/wsdl/dto/ArrayOfStockKeepingUnitQuantityDTO.class
+com/yaesta/app/pdf/bean/GuideDataBean.class
 com/yaesta/integration/datil/json/bean/BodyParams.class
 com/yaesta/integration/vitex/wsdl/GiftListMemberDelete.class
 com/yaesta/integration/vitex/json/bean/To.class
@@ -313,6 +316,7 @@ com/yaesta/integration/vitex/wsdl/ProductGetAllFromUpdatedDateAndId.class
 com/yaesta/integration/tcc/wsdl/GrabarDespachoResponse.class
 com/yaesta/integration/vitex/wsdl/dto/ProductFieldNameDTO.class
 com/yaesta/integration/vitex/wsdl/WareHouseIStockableUpdateV3.class
+com/yaesta/app/pdf/TableStyle.class
 com/yaesta/integration/vitex/wsdl/dto/AddressDTO2.class
 com/yaesta/integration/vitex/wsdl/CategoryGet.class
 com/yaesta/app/persistence/entity/Order.class
@@ -452,6 +456,7 @@ com/yaesta/integration/vitex/wsdl/FreightCalculateV3Response.class
 com/yaesta/integration/laarcourier/controller/LaarCourierController.class
 com/yaesta/app/persistence/service/TramacoSupplierService.class
 com/yaesta/integration/datil/json/bean/DetallesAdicionales.class
+com/yaesta/app/pdf/bean/ItemData.class
 com/yaesta/app/persistence/vo/SupplierResponseVO.class
 com/yaesta/integration/vitex/wsdl/GiftListGetAllFromModifiedDateAndId.class
 com/yaesta/app/auth/CrossFilter.class
@@ -646,4 +651,5 @@ com/yaesta/integration/vitex/util/CategoryVtexUtil.class
 com/yaesta/integration/tramaco/controller/TramacoIntegrationController.class
 com/yaesta/integration/vitex/wsdl/vo/OrderStatusVO.class
 com/yaesta/integration/tcc/wsdl/GrabarDespacho3.class
+com/yaesta/app/pdf/enums/ItemDataEnum.class
 com/yaesta/integration/vitex/wsdl/WareHouseIStockableUpdate.class
