@@ -117,6 +117,7 @@ public class TramacoService implements Serializable{
 
 		TramacoAuthDTO tramacoAuth = new TramacoAuthDTO();
 		String response = "OK";
+		String mensaje = "EXITO";
 		
 		System.out.println("Inicio auhtService"); 
 
@@ -148,6 +149,11 @@ public class TramacoService implements Serializable{
 							respuestaAutenticarWs.getCuerpoRespuesta().getMensaje());
 					System.out.println("EXCEPCION:" +
 							respuestaAutenticarWs.getCuerpoRespuesta().getExcepcion());
+					
+					if(!respuestaAutenticarWs.getCuerpoRespuesta().getCodigo().equals("1")){
+						response = "ERROR";
+					}
+					mensaje = respuestaAutenticarWs.getCuerpoRespuesta().getMensaje();
 				}
 				if (respuestaAutenticarWs.getSalidaAutenticarWs() != null) {
 					SalidaAutenticarWs salida = respuestaAutenticarWs.getSalidaAutenticarWs();
@@ -189,9 +195,10 @@ public class TramacoService implements Serializable{
 
 			System.out.println("Error al consumir servicio tramaco Auth");
 
-			response= "error";
+			response= "ERROR";
 		}
 		
+		tramacoAuth.setMessage(mensaje);
 		tramacoAuth.setResponse(response);
 
 		return tramacoAuth;
@@ -434,8 +441,8 @@ public class TramacoService implements Serializable{
 							desc = desc + "#Can. " + ic.getQuantity()+ " COD:"+ supplierCodes[2]+" _ ";
 							}
 							
-							if(desc.length()>250){
-								desc=desc.substring(0, 250);
+							if(desc.length()>200){
+								desc=desc.substring(0, 199);
 							}
 							
 							carga.setDescripcion(desc);
@@ -498,7 +505,7 @@ public class TramacoService implements Serializable{
 									iva=BaseUtil.calculateIVA(itemValue,new Integer(datilIvaValue),datilIvaPercentValue);
 								}
 							}
-							if(itemValue.intValue()>0){
+							if(itemValue>0){
 								itemValue = itemValue + iva;
 							}
 							itemValue = (double) Math.round(itemValue * 100) / 100;
@@ -506,7 +513,7 @@ public class TramacoService implements Serializable{
 							//System.out.println("3> "+itemValue+ " "+totalValue);
 							totalValue = totalValue+itemValue;
 							totalValue = (double) Math.round(totalValue * 100) / 100;
-							if(hasAdjunto && itemValue.intValue()>0){
+							if(hasAdjunto && itemValue>0){
 								carga.setAdjuntos(Boolean.TRUE);
 								TableSequenceResponseVO codigoAdjunto =  getTramacoAdjCode();
 						    	
@@ -523,7 +530,11 @@ public class TramacoService implements Serializable{
 								
 							}else{
 								carga.setAdjuntos(Boolean.FALSE);
-								System.out.println("No hay adjunto");
+								System.out.println("No hay adjunto " + hasAdjunto + " " + itemValue);
+							}
+							
+							if(totalValue>guideInfo.getOrderComplete().getValue().doubleValue()){
+								carga.setValorCobro(guideInfo.getOrderComplete().getValue().doubleValue());
 							}
 							
 							System.out.println("Valor a cobrar" + carga.getValorCobro());
@@ -673,6 +684,8 @@ public class TramacoService implements Serializable{
 		
 		//Autenticar
 		TramacoAuthDTO tramacoAuth = authService();
+		
+		//guideInfo.getGuideBean().setResponse("OK");
 		
 		if(response.equals(tramacoAuth.getResponse())){
 			
@@ -853,6 +866,8 @@ public class TramacoService implements Serializable{
 				}
 				guideInfo.getGuideBean().setGuideTrackResponse(respuestaTrackGuiaWs);
 			}
+		}else{
+		   guideInfo.getGuideBean().setResponse("ERROR");
 		}
 		
 		return guideInfo;

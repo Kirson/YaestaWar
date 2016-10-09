@@ -17,9 +17,11 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "order_item",schema="yaesta")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class OrderItem implements Serializable{
 
 	/**
@@ -131,6 +133,18 @@ public class OrderItem implements Serializable{
 	
 	@Column(name="item_vtex_id")
 	private String itemVTexId;
+	
+	@Column(name="invoice_reference")
+	private String invoiceReference;
+	
+	@Column(name="invoice_number")
+	private String invoiceNumber;
+	
+	@Column(name="guide_number")
+	private String guideNumber;
+	
+	@Column(name="delivery_name")
+	private String deliveryName;
 
 	public Long getId() {
 		return id;
@@ -388,6 +402,38 @@ public class OrderItem implements Serializable{
 
 	public void setItemVTexId(String itemVTexId) {
 		this.itemVTexId = itemVTexId;
+	}
+
+	public String getInvoiceNumber() {
+		return invoiceNumber;
+	}
+
+	public void setInvoiceNumber(String invoiceNumber) {
+		this.invoiceNumber = invoiceNumber;
+	}
+
+	public String getGuideNumber() {
+		return guideNumber;
+	}
+
+	public void setGuideNumber(String guideNumber) {
+		this.guideNumber = guideNumber;
+	}
+
+	public String getInvoiceReference() {
+		return invoiceReference;
+	}
+
+	public void setInvoiceReference(String invoiceReference) {
+		this.invoiceReference = invoiceReference;
+	}
+
+	public String getDeliveryName() {
+		return deliveryName;
+	}
+
+	public void setDeliveryName(String deliveryName) {
+		this.deliveryName = deliveryName;
 	}
 	
 	

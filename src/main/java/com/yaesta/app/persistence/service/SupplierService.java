@@ -2,6 +2,7 @@ package com.yaesta.app.persistence.service;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -12,6 +13,9 @@ import org.springframework.stereotype.Service;
 
 import com.yaesta.app.util.Constants;
 import com.yaesta.app.util.SupplierUtil;
+import com.yaesta.integration.sellercenter.json.bean.UserBean;
+import com.yaesta.integration.sellercenter.json.bean.UserResponseContainer;
+import com.yaesta.integration.sellercenter.service.SellerCenterService;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -26,6 +30,7 @@ import com.yaesta.app.persistence.entity.SupplierContact;
 import com.yaesta.app.persistence.entity.SupplierDeliveryCalendar;
 import com.yaesta.app.persistence.entity.TramacoSupplier;
 import com.yaesta.app.persistence.entity.TramacoZone;
+import com.yaesta.app.persistence.entity.YaEstaLog;
 import com.yaesta.app.persistence.repository.AddressRepository;
 import com.yaesta.app.persistence.repository.ProveedorRepository;
 import com.yaesta.app.persistence.repository.SupplierContactRepository;
@@ -81,23 +86,37 @@ public class SupplierService implements Serializable {
 	@Autowired
 	TableSequenceService tableSequenceService;
 	
+	@Autowired
+	SellerCenterService sellerCenterService;
+	
+	@Autowired
+	YaEstaLogService logService;
+	
 	private @Value("${mail.smtp.from}") String mailFrom;
 	private @Value("${mail.smtp.supplier.to}") String mailTo;
 	private @Value("${mail.smtp.supplier.to.name}") String mailToName;
 	private @Value("${mail.smtp.supplier.contacts}") String mailSmtpSupplierContacts;
 	private @Value("${mail.smtp.supplier.contacts.names}") String mailSmtpSupplierContactsNames;
+	private @Value("${sellercenter.url}") String sellerCenterUrl;
 	
 	@Transactional
 	public Supplier save(Supplier entity, List<SupplierDeliveryCalendar> deliveryCalendar, List<SupplierContact> contactList, List<SupplierContact> removeContactList){
 		
+		Boolean isNew = Boolean.FALSE;
+		
 		if(entity.getId()==null){
 			entity.setId(tableSequenceService.getNextValue("SEQ_SUPPLIER"));
+			isNew = Boolean.TRUE;
 		}
 		
 		String postalCode = entity.getPostalCode();
-		if(postalCode!=null){
-			TramacoZone zone = tramacoZoneRepository.findOne(new Long(postalCode));
-			entity.setZone(zone);
+		if(postalCode!=null && !postalCode.equals("")){
+			try{
+				TramacoZone zone = tramacoZoneRepository.findOne(new Long(postalCode));
+				entity.setZone(zone);
+			}catch(Exception e){
+				System.out.println("Error asignando codigo de zona a proveedor");
+			}
 		}
 		
 		//if(entity.getStreetMain()==null){
@@ -133,6 +152,30 @@ public class SupplierService implements Serializable {
 		}
 		
 		sendNewSupplierMail(entity);
+		
+		if(isNew){
+			UserBean su = new UserBean();
+			su.setNombre(entity.getName());
+			su.setPerfil("seller");
+			su.setUsuario(entity.getSellerUser());
+			su.setEmail(entity.getContactEmail());
+			su.setId("(-"+entity.getId()+"-)");
+			
+			UserResponseContainer resp = sellerCenterService.createUser(su);
+			
+			if(!resp.getEstado().equals("error")){
+				entity.setPassword(resp.getUsuario().getPassword());
+				supplierRepository.save(entity);
+				//enviar notificacion de acceso al proveedor
+				sendNewSellerMail(entity,resp);
+			}else{
+				YaEstaLog yaestalog = new YaEstaLog();
+				yaestalog.setLogDate(new Date());
+				yaestalog.setProcessName("SELLERCENTER-CREATE");
+				yaestalog.setTextinfo(entity.getName()+ " ==> "+resp.getMsg());
+				logService.save(yaestalog);
+			}
+		}
 		
 		return entity;
 	}
@@ -537,6 +580,49 @@ public class SupplierService implements Serializable {
 	   }
    }
    
+   private void sendNewSellerMail(Supplier supplier, UserResponseContainer urc){
+	   if(supplier.getIsNew()){
+		   System.out.println("Inicio notificacion");
+		   MailInfo mailInfo = new MailInfo();
+		   MailParticipant sender = new MailParticipant();
+		   sender.setName("YaEsta.com");
+		   sender.setEmail(mailFrom);
+		   mailInfo.setMailSender(sender);
+		   MailParticipant receiver = new MailParticipant();
+		   receiver.setName(supplier.getName());
+		   receiver.setEmail(supplier.getContactEmail());
+		   mailInfo.setMailReceiver(receiver);
+		   /*
+		   List<MailParticipant> ccList = new ArrayList<MailParticipant>();
+		   String[] contactsNames = mailSmtpSupplierContactsNames.split("%");
+		   String[] contactsEmails = mailSmtpSupplierContacts.split("%");
+		
+			for(int j=0;j<contactsNames.length;j++){
+				MailParticipant cc = new MailParticipant();
+				cc.setEmail(contactsEmails[j]);
+				cc.setName(contactsNames[j]);
+				ccList.add(cc);
+			}
+			
+			mailInfo.setReceivers(ccList);
+			*/
+			
+			String subject="Notificación de clave de nuevo proveedor " + supplier.getName();
+			
+			mailInfo.setSubject(subject);
+			
+			String generalText = "Se informa de la creación en el sistema del proveedor " + supplier.getName() 
+								 + " identificado en el sistema con el ID " + supplier.getId() + ".<br></br>"
+								 + "Usted podra ingresar al sistema de SELLERS de YAESTA con las credenciales usuario <b>" + urc.getUsuario().getUsuario() + "</b> y clave <b>" + urc.getUsuario().getPassword() + "</b><br></br>"
+								 +"Para ingresar utilice el siguiente url " + sellerCenterUrl;	
+			
+			mailInfo.setGeneralText(generalText);
+			
+			mailService.sendMailTemplate(mailInfo, "newSellertoSellerNotification.vm");	
+			System.out.println("Fin notificacion");
+	   }
+   }
+   
    @Transactional
    public SupplierResponseVO deleteSupplier(SupplierVO supplierVO){
 	   SupplierResponseVO response = new SupplierResponseVO();
@@ -554,12 +640,20 @@ public class SupplierService implements Serializable {
 		   }
 		   
 		   if(supplier!=null){
+			   //Eliminar lista de contactos
 			   List<SupplierContact> contacts = getContacts(supplier);
 		   
 			   if(contacts!=null && !contacts.isEmpty()){
 				   supplierContactRepository.delete(contacts);
 			   }
+			   
+			   //Eliminar lista de direcciones
+			   List<Address> addressList = addressRepository.findBySupplier(supplier);
 		   
+			   if(addressList!=null && !addressList.isEmpty()){
+				   addressRepository.delete(addressList);
+			   }
+			   
 			   supplierRepository.delete(supplier);
 		   }
 	   }catch(Exception e){
