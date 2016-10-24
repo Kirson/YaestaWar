@@ -103,6 +103,7 @@
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/vitex/json/bean/ItemInvoice.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/vitex/wsdl/WareHouseIStockableUpdateResponse.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/vitex/json/bean/Seller.java
+/home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/app/service/SystemOutService.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/vitex/wsdl/StockKeepingUnitGetAllByProduct.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/app/persistence/vo/GuideBeanVO.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/app/mail/ItemInfoGuide.java

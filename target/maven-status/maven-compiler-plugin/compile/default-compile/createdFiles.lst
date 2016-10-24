@@ -80,6 +80,7 @@ com/yaesta/integration/bpm/activiti/controller/ActivitiController.class
 com/yaesta/integration/vitex/wsdl/GiftListSkuInsertResponse.class
 com/yaesta/integration/vitex/wsdl/ClientInsertUpdateV3.class
 com/yaesta/app/persistence/repository/TramacoZoneRepository.class
+com/yaesta/app/persistence/vo/TrackingContainerVO.class
 com/yaesta/integration/vitex/wsdl/OrderGetV3.class
 com/yaesta/integration/vitex/wsdl/StockKeepingUnitInsertUpdate.class
 com/yaesta/integration/vitex/wsdl/dto/ArrayOfIntegrationErrorDTO.class
@@ -248,6 +249,7 @@ com/yaesta/integration/sellercenter/json/bean/SellerUserContainer.class
 com/yaesta/app/controller/AppErrorController.class
 com/yaesta/app/persistence/controller/StoreController.class
 com/yaesta/integration/datil/json/bean/EnvioSri.class
+com/yaesta/integration/vitex/bean/OrderSchemaContainerBean.class
 com/yaesta/integration/vitex/json/bean/Stats.class
 com/yaesta/app/persistence/entity/Guide.class
 com/yaesta/integration/vitex/wsdl/ServiceGet.class
@@ -587,6 +589,7 @@ com/yaesta/integration/laarcourier/wsdl/CreateWayBillResponse.class
 com/yaesta/app/persistence/util/HibernateProxyTypeAdapter$1.class
 com/yaesta/integration/vitex/wsdl/AddressByAddressClientResponse.class
 com/yaesta/integration/vitex/wsdl/ObjectFactory.class
+com/yaesta/app/service/SystemOutService.class
 com/yaesta/integration/vitex/wsdl/dto/ArrayOfFreightScheduledDateOptionDTO.class
 com/yaesta/integration/bpm/activiti/service/ActivitiService.class
 com/yaesta/app/persistence/vo/ContactContainerVO.class
