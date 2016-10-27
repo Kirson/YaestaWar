@@ -344,6 +344,7 @@ com/yaesta/integration/vitex/wsdl/dto/BrandDTO.class
 com/yaesta/app/persistence/controller/ProductController.class
 com/yaesta/integration/vitex/wsdl/dto/GiftListStockKeepingUnitDTO.class
 com/yaesta/integration/vitex/wsdl/BrandInsertUpdateResponse.class
+com/yaesta/app/persistence/vo/SupplierInfoVO.class
 com/yaesta/integration/vitex/wsdl/BrandGetByName.class
 com/yaesta/integration/vitex/wsdl/ProductEspecificationInsertByFieldIdResponse.class
 com/yaesta/app/util/TrackingUtil.class

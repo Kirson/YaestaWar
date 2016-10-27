@@ -477,6 +477,7 @@
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/vitex/wsdl/dto/FreightStockKeepingUnitContextDTO.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/vitex/service/SKUService.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/tcc/wsdl/ArrayOfClsDespachoPaqueteria2Detalle.java
+/home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/app/persistence/vo/SupplierInfoVO.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/tcc/wsdl/TpDocumentoReferencia.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/vitex/json/bean/OrderConversation.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/vitex/wsdl/GiftListGetByCreatedDateResponse.java
