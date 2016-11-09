@@ -110,6 +110,7 @@
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/vitex/wsdl/OrderGetV3.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/vitex/wsdl/ClientGetAllFromCreatedDateAndIdResponse.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/vitex/wsdl/dto/OrderInteractionDTO.java
+/home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/vitex/bean/GuideRemisionContainer.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/vitex/wsdl/ProductGetSimilarCategory.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/app/persistence/entity/Guide.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/laarcourier/service/LaarCourierService.java

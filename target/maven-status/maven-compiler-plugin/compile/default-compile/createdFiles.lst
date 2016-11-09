@@ -106,6 +106,7 @@ com/yaesta/integration/datil/json/bean/Impuesto_.class
 com/yaesta/integration/vitex/wsdl/dto/ArrayOfGiftListMemberDTO.class
 com/yaesta/integration/tcc/wsdl/GrabarDespacho5Response.class
 com/yaesta/app/persistence/controller/CategoryController.class
+com/yaesta/integration/vitex/bean/GuideRemisionContainer.class
 com/yaesta/app/persistence/controller/CatalogController.class
 com/yaesta/integration/vitex/wsdl/ProductEspecificationTextInsertByFieldIdResponse.class
 com/yaesta/integration/vitex/wsdl/dto/ArrayOfStockKeepingUnitServiceDTO.class
