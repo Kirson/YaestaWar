@@ -153,6 +153,7 @@ public class GuideController implements Serializable {
 		List<GuideVO> found = guideService.findByStatus(guideSearch);
 		
 		if(found!=null && !found.isEmpty()){
+			
 			return new ResponseEntity<List<GuideVO>>(found,HttpStatus.OK);
 		}else{
 			return new ResponseEntity<List<GuideVO>>(new ArrayList<GuideVO>(),HttpStatus.OK);
@@ -227,5 +228,11 @@ public class GuideController implements Serializable {
 		
 		return new ResponseEntity<String>(result,HttpStatus.OK);
 		
+	}
+	
+	@RequestMapping(value = "/processMigrate", method = RequestMethod.GET)
+	public ResponseEntity<String> processMigrate(){
+		String result = guideService.processMigrate();
+		return new ResponseEntity<String>(result,HttpStatus.OK);
 	}
 }
