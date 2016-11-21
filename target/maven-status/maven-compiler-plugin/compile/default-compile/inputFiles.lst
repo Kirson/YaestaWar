@@ -117,6 +117,7 @@
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/tramaco/dto/DeliveryInfoDTO.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/vitex/wsdl/dto/ArrayOfPaymentDTO.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/app/task/ScheduledTasks.java
+/home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/vitex/bean/PaymentBean.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/app/persistence/service/BrandService.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/tramaco/dto/SupplierDTO.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/app/persistence/repository/BrandRepository.java
@@ -143,6 +144,7 @@
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/vitex/util/OrderVtexUtil.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/vitex/wsdl/StockKeepingUnitServiceListResponse.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/vitex/wsdl/OrderGetResponse.java
+/home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/app/persistence/vo/GfkVO.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/app/persistence/entity/TramacoZone.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/vitex/wsdl/StockKeepingUnitComplementInsertUpdate.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/app/persistence/vo/ClientVO.java
@@ -184,6 +186,7 @@
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/vitex/wsdl/base/ArrayOfstring.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/vitex/wsdl/dto/ArrayOfOrderStatusDTO.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/vitex/wsdl/dto/ArrayOfStoreDTO.java
+/home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/app/persistence/entity/GuideMigrate.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/app/persistence/controller/GuideController.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/laarcourier/wsdl/AddressInfo.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/vitex/wsdl/IntegrationSettingsResponse.java
@@ -388,6 +391,7 @@
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/app/mail/ItemInfo.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/vitex/wsdl/ImageListByStockKeepingUnitId.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/vitex/wsdl/ClientGetV3Response.java
+/home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/app/persistence/repository/GuideMigrateRepository.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/laarcourier/wsdl/package-info.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/app/persistence/vo/TrackingVO.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/vitex/wsdl/dto/ArrayOfOrderInvoiceDTO.java

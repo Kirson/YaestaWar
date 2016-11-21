@@ -194,6 +194,7 @@ com/yaesta/integration/vitex/wsdl/StockKeepingUnitImageRemove.class
 com/yaesta/app/persistence/vo/SupplierVO.class
 com/yaesta/app/persistence/vo/WarehouseVO.class
 com/yaesta/integration/vitex/wsdl/dto/OrderItemDiscountDTO.class
+com/yaesta/integration/vitex/bean/PaymentBean.class
 com/yaesta/integration/vitex/wsdl/DateTimeOffset.class
 com/yaesta/integration/tcc/wsdl/ObjectFactory.class
 com/yaesta/app/persistence/repository/StoreRepository.class
