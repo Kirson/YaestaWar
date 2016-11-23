@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.yaesta.app.YaestaWarApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 25.758 sec - in com.yaesta.app.YaestaWarApplicationTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 21.492 sec - in com.yaesta.app.YaestaWarApplicationTests
