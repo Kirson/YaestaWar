@@ -539,6 +539,7 @@ com/yaesta/integration/vitex/wsdl/ServiceInsertUpdate.class
 com/yaesta/integration/vitex/wsdl/dto/ArrayOfStockKeepingUnitKitDTO.class
 com/yaesta/integration/vitex/wsdl/CategoryGetByNameResponse.class
 com/yaesta/integration/vitex/util/OrderVtexUtil.class
+com/yaesta/app/pdf/BuildTagGuidePDF.class
 com/yaesta/integration/vitex/wsdl/ProductEspecificationListByProductIdResponse.class
 com/yaesta/integration/vitex/wsdl/WareHouseIStockableGetByStockKeepingUnit.class
 com/yaesta/integration/datil/json/bean/FacturaSRI.class
