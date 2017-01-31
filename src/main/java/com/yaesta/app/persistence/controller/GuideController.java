@@ -136,6 +136,12 @@ public class GuideController implements Serializable {
 		return new ResponseEntity<Guide>(result,HttpStatus.OK);
 	}
 	
+	@RequestMapping(value = "/updateGuide", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<GuideBeanVO> updateGuide(@RequestBody GuideBeanVO guideBean){
+		GuideBeanVO result = guideService.updateGuide(guideBean);
+		return new ResponseEntity<GuideBeanVO>(result,HttpStatus.OK);
+	}
+	
 	@RequestMapping(value = "/updateGuides", method = RequestMethod.GET)
 	public ResponseEntity<String> updateGuides(){
 		String result = guideService.updateGuides();
@@ -161,18 +167,54 @@ public class GuideController implements Serializable {
 	}
 	
 	@RequestMapping(value = "/getGuidesByStatusDeliveryDateVO/{status}/{deliveryDate}", method = RequestMethod.GET)
-	public ResponseEntity<List<GuideVO>> getGuidesByStatusDeliveryDateVO(@PathVariable("status") String status,@PathVariable("deliveryDate") Date deliveryDate) throws ParseException{
+	public ResponseEntity<List<GuideVO>> getGuidesByStatusDeliveryDateVO(@PathVariable("status") String status,@PathVariable("deliveryDate") Long deliveryDate) throws ParseException{
 		
 		GuideSearchVO guideSearch = new GuideSearchVO();
 		
 		//SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		
-		//Date dDeliveryDate = format.parse(deliveryDate);
+		Date dDeliveryDate = new Date(deliveryDate);
 		
-		guideSearch.setDeliveryDate(deliveryDate);
+		guideSearch.setDeliveryDate(dDeliveryDate);
 		guideSearch.setStatus(status);
 		
 		List<GuideVO> found = guideService.findByStatusAndDeliveryDate(guideSearch);
+		
+		if(found!=null && !found.isEmpty()){
+			return new ResponseEntity<List<GuideVO>>(found,HttpStatus.OK);
+		}else{
+			return new ResponseEntity<List<GuideVO>>(new ArrayList<GuideVO>(),HttpStatus.OK);
+		}
+	}
+	
+	@RequestMapping(value = "/getGuidesByStatusProgrammedDateVO/{status}/{programmedDate}", method = RequestMethod.GET)
+	public ResponseEntity<List<GuideVO>> getGuidesByStatusProgrammedDateVO(@PathVariable("status") String status,@PathVariable("programmedDate") Long programmedDate) throws ParseException{
+		
+		GuideSearchVO guideSearch = new GuideSearchVO();
+		
+		Date dProgrammedDate = new Date(programmedDate);
+		System.out.println("Fecha programada "+dProgrammedDate);
+		guideSearch.setProgrammedDate(dProgrammedDate);
+		guideSearch.setStatus(status);
+		
+		List<GuideVO> found = guideService.findGuideVOByProgrammedDateAndStatus(guideSearch);
+		
+		if(found!=null && !found.isEmpty()){
+			return new ResponseEntity<List<GuideVO>>(found,HttpStatus.OK);
+		}else{
+			return new ResponseEntity<List<GuideVO>>(new ArrayList<GuideVO>(),HttpStatus.OK);
+		}
+	}
+	
+	@RequestMapping(value = "/getGuidesByProgrammedDateVO/{programmedDate}", method = RequestMethod.GET)
+	public ResponseEntity<List<GuideVO>> getGuidesByProgrammedDateVO(@PathVariable("status") String status,@PathVariable("programmedDate") Date programmedDate) throws ParseException{
+		
+		GuideSearchVO guideSearch = new GuideSearchVO();
+		
+		
+		guideSearch.setProgrammedDate(programmedDate);
+		
+		List<GuideVO> found = guideService.findGuideVOByProgrammedDate(guideSearch);
 		
 		if(found!=null && !found.isEmpty()){
 			return new ResponseEntity<List<GuideVO>>(found,HttpStatus.OK);
@@ -209,7 +251,7 @@ public class GuideController implements Serializable {
 		guideSearch.setFinishDate(dFinishDate);
 		guideSearch.setStatus(status);
 		
-		List<GuideVO> found = guideService.findByStatusAndDeliveryDate(guideSearch);
+		List<GuideVO> found = guideService.findByCreateDateBetweenAndStatus(guideSearch);
 		
 		if(found!=null && !found.isEmpty()){
 			return new ResponseEntity<List<GuideVO>>(found,HttpStatus.OK);
