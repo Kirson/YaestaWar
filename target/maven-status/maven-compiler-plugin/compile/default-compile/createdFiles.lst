@@ -173,6 +173,7 @@ com/yaesta/integration/vitex/wsdl/OrderGet.class
 com/yaesta/integration/tcc/wsdl/GrabarDespacho4Response.class
 com/yaesta/integration/vitex/json/bean/TotalValue.class
 com/yaesta/integration/vitex/wsdl/AddressInsertUpdateV3.class
+com/yaesta/app/persistence/vo/GuidePaymentMethodVO.class
 com/yaesta/integration/vitex/wsdl/dto/ArrayOfOrderItemDiscountDTO.class
 com/yaesta/app/persistence/repository/TableSequenceRepository.class
 com/yaesta/app/persistence/repository/CategoryRepository.class
@@ -203,7 +204,6 @@ com/yaesta/app/persistence/repository/StoreRepository.class
 com/yaesta/integration/vitex/wsdl/dto/ArrayOfGiftListStockKeepingUnitDTO.class
 com/yaesta/app/persistence/vo/ItemContainerVO.class
 com/yaesta/integration/vitex/wsdl/dto/IntegrationWarehouseDTO.class
-com/yaesta/app/pdf/enums/GuideStatusEnum.class
 com/yaesta/integration/vitex/wsdl/GiftListMemberInsertUpdateResponse.class
 com/yaesta/integration/vitex/wsdl/OrderPaymentGetAll.class
 com/yaesta/integration/vitex/json/bean/DeliveryId.class
@@ -224,6 +224,7 @@ com/yaesta/integration/tcc/wsdl/GrabarDespacho.class
 com/yaesta/app/persistence/entity/Brand.class
 com/yaesta/integration/vitex/wsdl/dto/StoreDTO.class
 com/yaesta/integration/vitex/wsdl/GiftListGetByClientCpf.class
+com/yaesta/app/persistence/vo/GuidePaymentVO.class
 com/yaesta/app/rest/RestTemplateTEXTPLAIN.class
 com/yaesta/app/rest/RestTemplateXML.class
 com/yaesta/integration/vitex/wsdl/CategoryInsertUpdate.class
@@ -325,6 +326,7 @@ com/yaesta/integration/vitex/wsdl/StoreList.class
 com/yaesta/integration/vitex/wsdl/ImageInsertUpdate.class
 com/yaesta/app/persistence/repository/YaEstaLogRepository.class
 com/yaesta/integration/vitex/json/bean/CategoryVtex.class
+com/yaesta/app/persistence/enums/GuideStatusEnum.class
 com/yaesta/integration/vitex/wsdl/base/ArrayOfstring.class
 com/yaesta/integration/vitex/wsdl/ProductGetAllFromUpdatedDateAndId.class
 com/yaesta/integration/tcc/wsdl/GrabarDespachoResponse.class

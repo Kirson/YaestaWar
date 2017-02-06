@@ -3,7 +3,6 @@
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/vitex/wsdl/dto/FreightStockKeepingUnitDTO.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/tcc/wsdl/GrabarDespacho2.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/vitex/wsdl/BrandInsertUpdate.java
-/home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/app/pdf/enums/GuideStatusEnum.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/datil/json/bean/BaseBean.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/vitex/wsdl/StockKeepingUnitActiveResponse.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/vitex/wsdl/ProductEspecificationListByProductIdResponse.java
@@ -103,6 +102,7 @@
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/app/persistence/entity/TramacoSupplier.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/vitex/json/bean/ItemInvoice.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/vitex/wsdl/WareHouseIStockableUpdateResponse.java
+/home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/app/persistence/vo/GuidePaymentVO.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/vitex/json/bean/Seller.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/app/service/SystemOutService.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/vitex/wsdl/StockKeepingUnitGetAllByProduct.java
@@ -393,6 +393,7 @@
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/vitex/wsdl/ClientGetByGuidV3.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/vitex/wsdl/CategoryInsertUpdateResponse.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/app/mail/MailService.java
+/home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/app/persistence/vo/GuidePaymentMethodVO.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/app/mail/ItemInfo.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/vitex/wsdl/ImageListByStockKeepingUnitId.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/vitex/wsdl/ClientGetV3Response.java
@@ -645,6 +646,7 @@
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/vitex/json/bean/Origin_.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/app/persistence/service/ParameterService.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/vitex/wsdl/StockKeepingUnitActive.java
+/home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/app/persistence/enums/GuideStatusEnum.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/app/YaestaSoapClient.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/integration/vitex/wsdl/ProductGetAllFromUpdatedDateAndIdResponse.java
 /home/cristhian/fugu/workspace/yaesta-war/src/main/java/com/yaesta/app/BaseConfig.java
