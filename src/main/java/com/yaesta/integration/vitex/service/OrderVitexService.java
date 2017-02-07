@@ -879,8 +879,10 @@ public class OrderVitexService extends BaseVitexService {
 		guideDTO.setCustomerDocument(guideInfoBean.getCustomerDocument());
 
 		GuideDTO resultGuideInfo = tramacoService.generateGuides(guideDTO);
+		
+		System.out.println("Resultado generar Guias " + resultGuideInfo.getResponse());
 
-		if (resultGuideInfo.getResponse().equals("OK")) {
+		if (resultGuideInfo.getResponse().equals("OK") || resultGuideInfo.getResponse().equals("EXITO")) {
 
 			List<GuideBeanDTO> guideInfoBeanList = resultGuideInfo.getGuideBeanList();
 			List<GuideBeanDTO> guideInfoList = new ArrayList<GuideBeanDTO>();
@@ -934,7 +936,9 @@ public class OrderVitexService extends BaseVitexService {
 
 				guideDTO.setGuideBeanList(guideInfoList);
 				// LLamar ahora al servicio de pdfs
+				System.out.println("Antes de llamar a generar PDF");
 				resultGuideInfo = tramacoService.generateGuidesPDF(guideDTO);
+				System.out.println("Luego de llamar a generar PDF");
 				guideInfoBeanList = resultGuideInfo.getGuideBeanList();
 				// Realizar segunda iteracion para las guias
 				List<GuideBeanDTO> newGuideInfoBeanList = new ArrayList<GuideBeanDTO>();

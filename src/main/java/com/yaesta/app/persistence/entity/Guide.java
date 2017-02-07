@@ -602,7 +602,7 @@ public class Guide implements Serializable{
 	public void postLoad(){
 		
 		for(GuideStatusEnum gse:GuideStatusEnum.values()){
-			if(this.status.equals(gse.getCode())){
+			if(this.status!=null && this.status.equals(gse.getCode())){
 				this.setStatusDescription(gse.getDescription());
 			}
 		}
