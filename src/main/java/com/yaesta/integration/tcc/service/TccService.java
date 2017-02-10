@@ -89,6 +89,8 @@ public class TccService  {
 		
 		try{
 			
+			result.setResponse("OK");
+			
 			
 			//String response = "OK";
 			
@@ -106,7 +108,9 @@ public class TccService  {
 					objDespacho.setFechahoralote(UtilDate.fromDateToString(new Date()));
 					objDespacho.setUnidadnegocio(tccBusinessUnit);
 					objDespacho.setFechadespacho(UtilDate.fromDateToString(new Date()));
-					objDespacho.setCuentaremitente(tccBusinessUnit);
+					objDespacho.setCuentaremitente(tccBusinessAccount);
+					objDespacho.setIdentificacionremitente(yaestaRuc);
+					objDespacho.setTipoidentificacionremitente("NIT");
 					//objDespacho.setDirecciondestinatario(guideInfo.getOrderComplete().getShippingData().getAddress().getStreet());
 					
 					String province =guideInfo.getOrderComplete().getShippingData().getAddress().getState().toUpperCase();
@@ -331,7 +335,7 @@ public class TccService  {
 						}
 						
 						systemOut.println("Total Valor mercancia "+totalValue);
-						objDespacho.setTotalvalormercancia(1D);
+						objDespacho.setTotalvalormercancia(totalValue);
 						
 						//documentacion dice enviar vacio
 						//objDespacho.setCodigolote(guideInfo.getOrderComplete().getOrderId());
@@ -342,11 +346,11 @@ public class TccService  {
 					}//for de items
 					
 					systemOut.println("Total Asegurado "+totalAsegurado);
-					unidad.setValormercancia("1");
+					unidad.setValormercancia(formatProductValue(totalValue));
 					unidad.setNumerobolsa("1");
 					unidad.setReferencias("");
 					unidad.setCodigobarras("");
-					unidad.setTipoempaque("CLEM_CAJA");
+					//unidad.setTipoempaque("CLEM_CAJA");
 					objDespacho.getUnidad().add(unidad);
 					objDespacho.setFuente("WSTCC");
 				
@@ -360,7 +364,16 @@ public class TccService  {
 					GrabarDespacho4Response gdesResponse = (GrabarDespacho4Response)webServiceTemplateTCC.marshalSendAndReceive(gdes,new SoapActionCallback("http://clientes.tcc.com.co/GrabarDespacho4"));
 				
 					
-					systemOut.println("Remesa" + gdesResponse.getMensaje());
+					systemOut.println("TCC Remesa: " + gdesResponse.getMensaje());
+					
+					//Grabar log en caso de exito
+					YaEstaLog yaestalog = new YaEstaLog();
+					yaestalog.setLogDate(new Date());
+					yaestalog.setProcessName("WAYBILL-TCC");
+					yaestalog.setTextinfo("EXITO :"+" TCC Remesa :" + gdesResponse.getMensaje());
+					yaestalog.setOrderId(guideInfo.getOrderComplete().getOrderId());
+					logService.save(yaestalog);
+					//
 					
 				}//fin no hay error
 			
@@ -369,11 +382,11 @@ public class TccService  {
 			YaEstaLog yaestalog = new YaEstaLog();
 			yaestalog.setLogDate(new Date());
 			yaestalog.setProcessName("WAYBILL-TCC");
-			yaestalog.setTextinfo(guideInfo.getOrderComplete().getOrderId());
 			yaestalog.setTextinfo("Error "+e.getMessage());
 			yaestalog.setOrderId(guideInfo.getOrderComplete().getOrderId());
 			logService.save(yaestalog);
 			systemOut.println("Error TCC" +e.getMessage());
+			result.setResponse("ERROR");
 			e.printStackTrace();
 		}
 		
@@ -420,6 +433,19 @@ public class TccService  {
 
 		}
 		
+		return result;
+	}
+	
+	protected  String formatProductValue(Double value){
+		String result = "0";
+		
+		if(value!=null){
+			value = value*100;
+			
+			result = value.toString();
+			result = result.replaceAll("\\.", "");
+			result = result.replaceAll(",", "");
+		}
 		return result;
 	}
 	
