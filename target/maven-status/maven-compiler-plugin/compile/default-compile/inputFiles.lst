@@ -514,6 +514,7 @@ D:\env\eclipse\jee-neon\workspace\YaestaWar\src\main\java\com\yaesta\integration
 D:\env\eclipse\jee-neon\workspace\YaestaWar\src\main\java\com\yaesta\integration\vitex\wsdl\ServicePriceGetResponse.java
 D:\env\eclipse\jee-neon\workspace\YaestaWar\src\main\java\com\yaesta\integration\datil\json\bean\EnvioSri.java
 D:\env\eclipse\jee-neon\workspace\YaestaWar\src\main\java\com\yaesta\integration\vitex\wsdl\StockKeepingUnitGetByEanResponse.java
+D:\env\eclipse\jee-neon\workspace\YaestaWar\src\main\java\com\yaesta\app\util\ObjectUtil.java
 D:\env\eclipse\jee-neon\workspace\YaestaWar\src\main\java\com\yaesta\integration\vitex\wsdl\dto\ArrayOfStoreDTO.java
 D:\env\eclipse\jee-neon\workspace\YaestaWar\src\main\java\com\yaesta\integration\vitex\wsdl\OrderGet.java
 D:\env\eclipse\jee-neon\workspace\YaestaWar\src\main\java\com\yaesta\integration\vitex\wsdl\OrderGetV3Response.java

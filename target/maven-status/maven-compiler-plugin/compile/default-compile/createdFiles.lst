@@ -354,6 +354,7 @@ com\yaesta\integration\vitex\json\bean\TotalValue.class
 com\yaesta\integration\vitex\wsdl\dto\ArrayOfGiftListMemberDTO.class
 com\yaesta\integration\vitex\wsdl\StockKeepingUnitEspecificationListBySkuId.class
 com\yaesta\app\persistence\vo\ItemContainerVO.class
+com\yaesta\app\util\ObjectUtil.class
 com\yaesta\integration\vitex\bean\OrderSchemaContainerBean.class
 com\yaesta\integration\tcc\wsdl\TpGrabarRemesaCompleta.class
 com\yaesta\integration\vitex\json\bean\Facets.class
