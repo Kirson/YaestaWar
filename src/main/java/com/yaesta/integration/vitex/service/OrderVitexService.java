@@ -1112,8 +1112,7 @@ public class OrderVitexService extends BaseVitexService {
 				Guide guide = new Guide();
 				guide.setCreateDate(new Date());
 				guide.setOrderVitexId(orderComplete.getOrderId());
-				guide.setVitexDispatcherId(gbd.getGuideResponse().getSalidaGenerarGuiaWs().getLstGuias().get(0).getId()
-						+ "%" + gbd.getGuideResponse().getSalidaGenerarGuiaWs().getLstGuias().get(0).getGuia());
+				guide.setVitexDispatcherId(gbd.getGuideNumber());
 				guide.setGuideInfo(new Gson().toJson(gbd));
 				guide.setOrder(order);
 				guide.setDeliveryCost(gbd.getDeliveryCost());
@@ -1122,6 +1121,8 @@ public class OrderVitexService extends BaseVitexService {
 				guide.setDeliveryStatus("GENERATED");
 				guide.setSupplier(gbd.getSupplier());
 				guide.setCustomerName(orderComplete.getCustomerName());
+				guide.setDocumentUrl(gbd.getPdfUrl());
+				//guide.setDocumentTagUrl(gbd.getPdfRotuleUrl());
 				try {
 					guide.setOrderDate(UtilDate.fromIsoToDateTime(orderComplete.getCreationDate()));
 				} catch (ParseException e) {
@@ -1132,6 +1133,16 @@ public class OrderVitexService extends BaseVitexService {
 				guideService.saveGuide(guide);
 				gbd.setGuide(guide);
 				guideInfoList.add(gbd);
+				
+				guideService.saveGuide(guide);
+				gbd.setGuide(guide);
+				guideInfoList.add(gbd);
+
+				List<GuideDetail> details = gbd.getDetails();
+				// Guardar los detalles de la guia
+				if (details != null && !details.isEmpty()) {
+					guideService.saveGuideDetail(guide, details);
+				}
 			}
 
 			guideDTO.setGuideBeanList(guideInfoList);

@@ -3,6 +3,7 @@ package com.yaesta.integration.tcc.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -24,6 +25,7 @@ import org.codehaus.jackson.map.JsonMappingException;
 import com.yaesta.app.persistence.entity.YaEstaLog;
 import com.google.gson.Gson;
 import com.yaesta.app.persistence.entity.CoberturaTCC;
+import com.yaesta.app.persistence.entity.GuideDetail;
 import com.yaesta.app.persistence.service.CoberturaTCCService;
 import com.yaesta.app.persistence.service.TableSequenceService;
 import com.yaesta.app.persistence.service.YaEstaLogService;
@@ -31,6 +33,7 @@ import com.yaesta.app.service.SystemOutService;
 import com.yaesta.app.util.ObjectUtil;
 import com.yaesta.app.util.SupplierUtil;
 import com.yaesta.app.util.UtilDate;
+import com.yaesta.integration.tramaco.dto.GuideBeanDTO;
 import com.yaesta.integration.tramaco.dto.GuideDTO;
 import com.yaesta.integration.vitex.bean.SupplierDeliveryInfo;
 import com.yaesta.integration.vitex.json.bean.Dimension;
@@ -82,6 +85,8 @@ public class TccService  {
 	protected @Value("${tcc.service.user}") String tccServiceUser;
 	protected @Value("${tcc.service.password}") String tccServicePassword;
 	protected @Value("${tcc.service.pdf.path}") String tccServicePdfPath;
+	protected @Value("${tcc.service.pdf.guide.prefix}") String tccServicePdfGuidePrefix;
+	protected @Value("${tcc.service.pdf.rotule.prefix}") String tccServicePdfRotulePrefix;
 	protected @Value("${tcc.service.business.unit}") String tccBusinessUnit;
 	protected @Value("${tcc.service.business.account}") String tccBusinessAccount;
 	protected @Value("${tcc.service.clase.empaque}") String tccServiceClaseEmpaque;
@@ -107,9 +112,9 @@ public class TccService  {
 			//String response = "OK";
 			
 			systemOut.println("# proveedores "+ guideInfo.getOrderComplete().getSupplierDeliveryInfoList().size());
-			
+			List<GuideBeanDTO> resultGuideBeanList = new ArrayList<GuideBeanDTO>();
 			for(SupplierDeliveryInfo sdi:guideInfo.getOrderComplete().getSupplierDeliveryInfoList()){
-			
+				GuideBeanDTO gbd = new GuideBeanDTO();
 				List<String> errorInfo = SupplierUtil.validateSupplierInfo(sdi.getSupplier());
 				
 				if(errorInfo.isEmpty() && sdi.getSelected() && guideInfo.getDeliverySelected()!=null && guideInfo.getDeliverySelected().getNemonic().equals(DeliveryEnum.TCC.getNemonic())){
@@ -242,6 +247,7 @@ public class TccService  {
 					String desc = "";
 					TpUnidad unidad = new TpUnidad();
 					systemOut.println("# items "+sdi.getItems().size());
+					List<GuideDetail> detailList = new ArrayList<GuideDetail>();
 					for(ItemComplete ic:sdi.getItems())
 					{
 						itemValue =0D;
@@ -370,6 +376,15 @@ public class TccService  {
 						objDespacho.setCodigolote(getLoteCode());
 						//objDespacho.setNumeroDepacho(guideInfo.getOrderComplete().getOrderId());
 					    objDespacho.setNumeroReferenciaCliente(guideInfo.getOrderComplete().getOrderId());
+					    
+					    GuideDetail guiD = new GuideDetail();
+						guiD.setItemName(ic.getName());
+						guiD.setOrderVitexId(guideInfo.getOrderComplete().getOrderId());
+						guiD.setVitexId(ic.getId());
+						guiD.setQuantity(new Long(ic.getQuantity()));
+						guiD.setItemValue(itemValue);
+						guideInfo.getDetails().add(guiD);
+						detailList.add(guiD);
 						
 					}//for de items
 					
@@ -398,20 +413,50 @@ public class TccService  {
 					GrabarDespacho4Response gdesResponse = (GrabarDespacho4Response)webServiceTemplateTCC.marshalSendAndReceive(gdes,new SoapActionCallback("http://clientes.tcc.com.co/GrabarDespacho4"));
 				
 					
+					
 					systemOut.println("TCC Remesa: " + gdesResponse.getMensaje());
 					
-					//Grabar log en caso de exito
-					YaEstaLog yaestalog = new YaEstaLog();
-					yaestalog.setLogDate(new Date());
-					yaestalog.setProcessName("WAYBILL-TCC");
-					yaestalog.setTextinfo("TCC Remesa :" + gdesResponse.getMensaje());
-					yaestalog.setOrderId(guideInfo.getOrderComplete().getOrderId());
-					logService.save(yaestalog);
-					//
-					
+					//Escribir los archivos
+					if(gdesResponse!=null && gdesResponse.getRemesa()!=null){
+						gbd.setItemValue(itemValue);
+						gbd.setDeliveryCost(deliveryCost);
+						gbd.setDeliveryPayment(deliveryPayment);
+						gbd.setSupplier(sdi.getSupplier());
+						gbd.setItemList(sdi.getItems());
+						gbd.setHasPayment(hasAdjunto);
+						gbd.setTotalValue(totalValue);
+						gbd.setResponse("OK");
+						gbd.setDeliveryName("TCC");
+						gbd.setGuideNumber(gdesResponse.getRemesa());
+						gbd.setDetails(detailList);
+						
+						if(gdesResponse.getIMGRemesa()!=null && gdesResponse.getIMGRotulos()!=null){
+							String guideName = tccServicePdfPath+tccServicePdfGuidePrefix+guideInfo.getOrderComplete().getOrderId()+"_"+gdesResponse.getRemesa()+"_"+(new Date()).getTime() + ".pdf";
+							String rotuleName = tccServicePdfPath+tccServicePdfRotulePrefix+guideInfo.getOrderComplete().getOrderId()+"_"+gdesResponse.getRemesa()+"_"+(new Date()).getTime() + ".pdf";
+							FileUtils.writeByteArrayToFile(new File(guideName),gdesResponse.getIMGRemesa());
+							FileUtils.writeByteArrayToFile(new File(rotuleName),gdesResponse.getIMGRotulos());
+							gbd.setPdfUrl(guideName);
+							gbd.setPdfRotuleUrl(rotuleName);
+						}
+						
+						//Grabar log en caso de exito
+						YaEstaLog yaestalog = new YaEstaLog();
+						yaestalog.setLogDate(new Date());
+						yaestalog.setProcessName("WAYBILL-TCC");
+						yaestalog.setTextinfo("TCC Remesa :" + gdesResponse.getMensaje());
+						yaestalog.setOrderId(guideInfo.getOrderComplete().getOrderId());
+						logService.save(yaestalog);
+						//
+					}
+					resultGuideBeanList.add(gbd);
 				}//fin no hay error
 			
 			}//fin SDI
+			
+			//
+			result.setGuideBeanList(resultGuideBeanList);
+	
+			
 		}catch(Exception e){
 			YaEstaLog yaestalog = new YaEstaLog();
 			yaestalog.setLogDate(new Date());
