@@ -433,6 +433,9 @@ public class TccService  {
 						if(gdesResponse.getIMGRemesa()!=null && gdesResponse.getIMGRotulos()!=null){
 							String guideName = tccServicePdfPath+tccServicePdfGuidePrefix+guideInfo.getOrderComplete().getOrderId()+"_"+gdesResponse.getRemesa()+"_"+(new Date()).getTime() + ".pdf";
 							String rotuleName = tccServicePdfPath+tccServicePdfRotulePrefix+guideInfo.getOrderComplete().getOrderId()+"_"+gdesResponse.getRemesa()+"_"+(new Date()).getTime() + ".pdf";
+							
+							System.out.println("GuideName "+guideName);
+							System.out.println("RotuleName "+rotuleName);
 							FileUtils.writeByteArrayToFile(new File(guideName),gdesResponse.getIMGRemesa());
 							FileUtils.writeByteArrayToFile(new File(rotuleName),gdesResponse.getIMGRotulos());
 							gbd.setPdfUrl(guideName);
