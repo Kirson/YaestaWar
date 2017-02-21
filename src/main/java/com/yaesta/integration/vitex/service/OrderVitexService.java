@@ -1146,37 +1146,26 @@ public class OrderVitexService extends BaseVitexService {
 			}
 
 			guideDTO.setGuideBeanList(guideInfoList);
-			// LLamar ahora al servicio de pdfs
-			/*
-			 * resultGuideInfo = tccService.generateGuidesPDF(guideDTO);
-			 * guideInfoBeanList = resultGuideInfo.getGuideBeanList();
-			 * List<Guide> guides = new ArrayList<Guide>(); for(GuideBeanDTO
-			 * gbd:guideInfoBeanList){ Guide guide = gbd.getGuide();
-			 * guide.setStatus("GENERATED-PDF");
-			 * guide.setDocumentUrl(gbd.getPdfUrl());
-			 * guide.setDeliveryName("TRAMACO"); guideService.saveGuide(guide);
-			 * guides.add(guide);
-			 * response.getPdfPathList().add(gbd.getPdfUrl()); }
-			 * 
-			 * responseList.add(resultGuideInfo); guideDTO=resultGuideInfo;
-			 */
+			
 			orderService.saveOrder(order);
 		}
 
 		result.setGuideInfoBean(response);
 
 		result.setGuides(responseList);
-		/*
-		 * List<MailInfo> mailInfoList=
-		 * prepareMailOrder(orderComplete,supplierDeliveryInfoList,guideInfoBean
-		 * .getDeliverySelected());
-		 * 
-		 * for(MailInfo mailInfo:mailInfoList){ for(GuideBeanDTO
-		 * gDto:guideDTO.getGuideBeanList()){
-		 * if(gDto.getSupplier().getId()==mailInfo.getRefId()){
-		 * mailInfo.getAttachmentList().add(gDto.getPdfUrl()); } }
-		 * mailService.sendMailTemplate(mailInfo, "guideNotification.vm"); }
-		 */
+		
+		 List<MailInfo> mailInfoList=
+		 prepareMailOrder(orderComplete,supplierDeliveryInfoList,guideInfoBean.getDeliverySelected(),null);
+		  
+		 for(MailInfo mailInfo:mailInfoList){ 
+			 for(GuideBeanDTO gDto:guideDTO.getGuideBeanList()){
+				 if(gDto.getSupplier().getId()==mailInfo.getRefId()){
+					 mailInfo.getAttachmentList().add(gDto.getPdfUrl()); 
+				  } 
+			  }
+			 mailService.sendMailTemplate(mailInfo, "guideNotification.vm"); 
+	   }
+		 
 
 		if (mailNotifyCustomer.equals("Y")) {
 			sendGuideMailCustomer(orderComplete);

@@ -440,6 +440,8 @@ public class TccService  {
 							FileUtils.writeByteArrayToFile(new File(rotuleName),gdesResponse.getIMGRotulos());
 							gbd.setPdfUrl(guideName);
 							gbd.setPdfRotuleUrl(rotuleName);
+						}else{
+							System.out.println("No contiene salida PDF");
 						}
 						
 						//Grabar log en caso de exito
