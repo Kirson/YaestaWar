@@ -409,12 +409,20 @@ public class TccService  {
 					
 					systemOut.println("Objeto "+ json);
 					//Intentar mandar a grabar el objeto antes de generar la llamada a servicio de TCC
-					buildLog(json,guideInfo.getOrderComplete().getOrderId());					
-					GrabarDespacho4Response gdesResponse = (GrabarDespacho4Response)webServiceTemplateTCC.marshalSendAndReceive(gdes,new SoapActionCallback("http://clientes.tcc.com.co/GrabarDespacho4"));
+					buildLog(json,guideInfo.getOrderComplete().getOrderId(),null);					
+					GrabarDespacho4Response gdesResponse = (GrabarDespacho4Response)webServiceTemplateTCC.marshalSendAndReceive("http://clientes.tcc.com.co/servicios/wsdespachos.asmx",gdes,new SoapActionCallback("http://clientes.tcc.com.co/GrabarDespacho4"));
 				
 					
 					
 					systemOut.println("TCC Remesa: " + gdesResponse.getMensaje());
+					
+					System.out.println("TCC Remesa: " + gdesResponse.getMensaje());
+					
+					String json2 = new Gson().toJson(gdesResponse);
+					
+					systemOut.println("Objeto2 "+ json2);
+					//Intentar mandar a grabar el objeto antes de generar la llamada a servicio de TCC
+					buildLog(json2,guideInfo.getOrderComplete().getOrderId(),"RESPONSE");	
 					
 					//Escribir los archivos
 					if(gdesResponse!=null && gdesResponse.getRemesa()!=null){
@@ -452,6 +460,8 @@ public class TccService  {
 						yaestalog.setOrderId(guideInfo.getOrderComplete().getOrderId());
 						logService.save(yaestalog);
 						//
+					}else{
+						System.out.println("No hay response en objeto");
 					}
 					resultGuideBeanList.add(gbd);
 				}//fin no hay error
@@ -537,7 +547,7 @@ public class TccService  {
 	 * Metodo para grabar el log de lo que se envia a TCC en un archivo
 	 * @param jsonLog
 	 */
-	private void buildLog(String jsonLog, String orderId){
+	private void buildLog(String jsonLog, String orderId, String sufix){
 		try {
 			ObjectMapper mapper = new ObjectMapper();
 
@@ -545,6 +555,11 @@ public class TccService  {
 			Object oJson = mapper.readValue(jsonLog, GrabarDespacho4.class);
 			String indented = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(oJson);
 			String fileName = yaestaLogPath + yaestaPrefixTcc + orderId +"_" + (new Date()).getTime() + ".txt";
+			
+			if(sufix!=null){
+				fileName = yaestaLogPath + yaestaPrefixTcc +"_" + sufix +"_" + orderId +"_" + (new Date()).getTime() + ".txt";
+			}
+			
 			FileUtils.writeStringToFile(new File(fileName), indented);
 			//System.out.println("ObjTCC==>>"+jsonLog);
 		} catch (JsonParseException e) {
