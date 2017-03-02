@@ -369,7 +369,7 @@ public class TccService  {
 						}
 						
 						systemOut.println("Total Valor mercancia "+totalValue);
-						objDespacho.setTotalvalormercancia(totalValue);
+						objDespacho.setTotalvalormercancia(totalValue.toString());
 						
 						//documentacion dice enviar vacio
 						//objDespacho.setCodigolote(guideInfo.getOrderComplete().getOrderId());
@@ -412,7 +412,7 @@ public class TccService  {
 					buildLog(json,guideInfo.getOrderComplete().getOrderId(),null);					
 					GrabarDespacho4Response gdesResponse = (GrabarDespacho4Response)webServiceTemplateTCC.marshalSendAndReceive("http://clientes.tcc.com.co/servicios/wsdespachos.asmx",gdes,new SoapActionCallback("http://clientes.tcc.com.co/GrabarDespacho4"));
 				
-					
+					//"http://clientes.tcc.com.co/"
 					
 					systemOut.println("TCC Remesa: " + gdesResponse.getMensaje());
 					
@@ -438,14 +438,14 @@ public class TccService  {
 						gbd.setGuideNumber(gdesResponse.getRemesa());
 						gbd.setDetails(detailList);
 						
-						if(gdesResponse.getIMGRemesa()!=null && gdesResponse.getIMGRotulos()!=null){
+						if(gdesResponse.getImgremesa()!=null && gdesResponse.getImgrotulos()!=null){
 							String guideName = tccServicePdfPath+tccServicePdfGuidePrefix+guideInfo.getOrderComplete().getOrderId()+"_"+gdesResponse.getRemesa()+"_"+(new Date()).getTime() + ".pdf";
 							String rotuleName = tccServicePdfPath+tccServicePdfRotulePrefix+guideInfo.getOrderComplete().getOrderId()+"_"+gdesResponse.getRemesa()+"_"+(new Date()).getTime() + ".pdf";
 							
 							System.out.println("GuideName "+guideName);
 							System.out.println("RotuleName "+rotuleName);
-							FileUtils.writeByteArrayToFile(new File(guideName),gdesResponse.getIMGRemesa());
-							FileUtils.writeByteArrayToFile(new File(rotuleName),gdesResponse.getIMGRotulos());
+							FileUtils.writeByteArrayToFile(new File(guideName),gdesResponse.getImgremesa());
+							FileUtils.writeByteArrayToFile(new File(rotuleName),gdesResponse.getImgrotulos());
 							gbd.setPdfUrl(guideName);
 							gbd.setPdfRotuleUrl(rotuleName);
 						}else{

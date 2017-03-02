@@ -15,7 +15,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>1.4.0.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
 	<properties>
@@ -52,9 +52,9 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-        	<groupId>org.springframework.boot</groupId>
-        	<artifactId>spring-boot-starter-mail</artifactId>
-    	</dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -67,77 +67,100 @@
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
 		<dependency>
-    		<groupId>com.google.guava</groupId>
-    		<artifactId>guava</artifactId>
-    		<version>r05</version>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>r05</version>
 		</dependency>
-		
+
 		<dependency>
-    		<groupId>com.google.code.gson</groupId>
-    		<artifactId>gson</artifactId>
-    	</dependency>
-    	<dependency>
-    		<groupId>org.apache.velocity</groupId>
-    		<artifactId>velocity</artifactId>
-    	</dependency>
-    	<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.velocity</groupId>
+			<artifactId>velocity</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.jboss.resteasy</groupId>
 			<artifactId>resteasy-client</artifactId>
 			<version>3.0.17.Final</version>
 		</dependency>
-		<dependency>  
-  			<groupId>org.jboss.resteasy</groupId>  
-  			<artifactId>resteasy-jaxrs</artifactId>  
-  			<version>3.0.17.Final</version>  
-		</dependency>  
 		<dependency>
-        	<groupId>org.jboss.resteasy</groupId>
-        	<artifactId>resteasy-jackson-provider</artifactId>
-        	<version>3.0.17.Final</version>
-    	</dependency>
-    	<dependency>
-    		<groupId>it.ozimov</groupId>
-    		<artifactId>spring-boot-email-core</artifactId>
-    		<version>0.3.4</version>
-		</dependency>	
-	
-		<dependency>
-    		<groupId>it.ozimov</groupId>
-    		<artifactId>spring-boot-thymeleaf-email</artifactId>
-    		<version>0.3.4</version>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-jaxrs</artifactId>
+			<version>3.0.17.Final</version>
 		</dependency>
-		
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-jackson-provider</artifactId>
+			<version>3.0.17.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>it.ozimov</groupId>
+			<artifactId>spring-boot-email-core</artifactId>
+			<version>0.3.4</version>
+		</dependency>
+
+		<dependency>
+			<groupId>it.ozimov</groupId>
+			<artifactId>spring-boot-thymeleaf-email</artifactId>
+			<version>0.3.4</version>
+		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/org.freemarker/freemarker -->
 		<dependency>
-    		<groupId>org.freemarker</groupId>
-    		<artifactId>freemarker</artifactId>
+			<groupId>org.freemarker</groupId>
+			<artifactId>freemarker</artifactId>
 		</dependency>
-		
+
 		<!-- https://mvnrepository.com/artifact/org.json/json -->
 		<dependency>
-    		<groupId>org.json</groupId>
-    		<artifactId>json</artifactId>
-    		<version>20160212</version>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20160212</version>
 		</dependency>
-		
+
 		<!-- https://mvnrepository.com/artifact/org.apache.xmlgraphics/fop -->
 		<dependency>
-    		<groupId>org.apache.xmlgraphics</groupId>
-    		<artifactId>fop</artifactId>
-    		<version>2.1</version>
+			<groupId>org.apache.xmlgraphics</groupId>
+			<artifactId>fop</artifactId>
+			<version>2.1</version>
 		</dependency>
-		
+
 		<!-- https://mvnrepository.com/artifact/com.itextpdf/itextpdf -->
 		<dependency>
-    		<groupId>com.itextpdf</groupId>
-    		<artifactId>itextpdf</artifactId>
-    		<version>5.5.9</version>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>itextpdf</artifactId>
+			<version>5.5.9</version>
 		</dependency>
-    	
+
+		<!-- https://mvnrepository.com/artifact/org.apache.axis/axis -->
 		<dependency>
-    		<groupId>dmz.comercial.servicio.cliente</groupId>
-    		<artifactId>cliente</artifactId>
-    		<version>2.0</version>
+			<groupId>org.apache.axis</groupId>
+			<artifactId>axis</artifactId>
+			<version>1.4</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/axis/axis-jaxrpc -->
+		<dependency>
+			<groupId>axis</groupId>
+			<artifactId>axis-jaxrpc</artifactId>
+			<version>1.4</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/javax.xml/jaxrpc-api -->
+		<dependency>
+			<groupId>javax.xml</groupId>
+			<artifactId>jaxrpc-api</artifactId>
+			<version>1.1</version>
+		</dependency>
+
+
+
+		<dependency>
+			<groupId>dmz.comercial.servicio.cliente</groupId>
+			<artifactId>cliente</artifactId>
+			<version>2.0</version>
 		</dependency>
 	</dependencies>
 
@@ -146,6 +169,21 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.jvnet.jax-ws-commons</groupId>
+				<artifactId>jaxws-maven-plugin</artifactId>
+				<version>2.3</version>
+				<configuration>
+					<vmArgs>
+						<vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
+					</vmArgs>
+					<xdebug>true</xdebug>
+					<sourceDestDir>src/main/java</sourceDestDir>
+					<wsdlUrls>
+						<wsdlUrl>http://clientes.tcc.com.co/servicios/wsdespachos.asmx?wsdl</wsdlUrl>
+					</wsdlUrls>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

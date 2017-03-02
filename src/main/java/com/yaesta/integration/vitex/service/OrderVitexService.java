@@ -72,6 +72,7 @@ import com.yaesta.integration.datil.json.bean.ItemGuiaRemision;
 import com.yaesta.integration.datil.json.enums.PagoEnum;
 import com.yaesta.integration.datil.service.DatilService;
 import com.yaesta.integration.tcc.service.TccService;
+import com.yaesta.integration.tcc.service.TccServiceJaxWs;
 import com.yaesta.integration.tramaco.dto.GuideBeanDTO;
 import com.yaesta.integration.tramaco.dto.GuideDTO;
 import com.yaesta.integration.tramaco.service.TramacoService;
@@ -155,6 +156,9 @@ public class OrderVitexService extends BaseVitexService {
 
 	@Autowired
 	TccService tccService;
+	
+	@Autowired
+	TccServiceJaxWs tccServiceJax;
 
 	@Autowired
 	private MailService mailService;
@@ -1102,7 +1106,7 @@ public class OrderVitexService extends BaseVitexService {
 		guideDTO.setCustomerAdditionalInfo(guideInfoBean.getCustomerAdditionalInfo());
 		guideDTO.setDeliverySelected(guideInfoBean.getDeliverySelected());
 
-		GuideDTO resultGuideInfo = tccService.generateGuides(guideDTO);
+		GuideDTO resultGuideInfo = tccServiceJax.generateGuides(guideDTO);
 
 		List<GuideBeanDTO> guideInfoBeanList = resultGuideInfo.getGuideBeanList();
 		List<GuideBeanDTO> guideInfoList = new ArrayList<GuideBeanDTO>();

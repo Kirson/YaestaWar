@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.ws.client.core.WebServiceTemplate;
 import org.springframework.ws.soap.saaj.SaajSoapMessageFactory;
+import org.springframework.ws.transport.http.HttpComponentsMessageSender;
 
 import com.yaesta.app.util.ws.WebServiceMessageSenderWithAuth;
 
@@ -94,12 +95,22 @@ public class YaestaSoapClient extends BaseConfig{
     }
     
     @Bean
+    public HttpComponentsMessageSender messageSender() {
+
+        HttpComponentsMessageSender httpComponentsMessageSender = new HttpComponentsMessageSender();
+
+        return httpComponentsMessageSender;
+
+    }
+    
+    @Bean
     public WebServiceTemplate webServiceTemplateTCC() throws Exception {
 
         WebServiceTemplate webServiceTemplate = new WebServiceTemplate(messageFactory());
         webServiceTemplate.setDefaultUri(tccServiceUrl);
         webServiceTemplate.setMarshaller(getMarshallerTCC());
         webServiceTemplate.setUnmarshaller(getMarshallerTCC());
+        webServiceTemplate.setMessageSender(messageSender());
         webServiceTemplate.afterPropertiesSet();
         return webServiceTemplate;
     }

@@ -2,16 +2,15 @@
 // Este archivo ha sido generado por la arquitectura JavaTM para la implantación de la referencia de enlace (JAXB) XML v2.2.11 
 // Visite <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Todas las modificaciones realizadas en este archivo se perderán si se vuelve a compilar el esquema de origen. 
-// Generado el: 2016.09.06 a las 03:08:21 PM ECT 
+// Generado el: 2017.02.26 a las 08:51:58 PM ECT 
 //
 
 
 package com.yaesta.integration.tcc.wsdl;
 
-import java.io.Serializable;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -44,31 +43,33 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "GrabarDespacho4Response",  namespace = "http://clientes.tcc.com.co/", propOrder = {
+@XmlType(name = "", propOrder = {
     "remesa",
-    "URLRelacionEnvio",
-    "URLRotulos",
-    "URLRemesa",
-    "IMGRelacionEnvio",
-    "IMGRotulos",
-    "IMGRemesa",
+    "urlRelacionEnvio",
+    "urlRotulos",
+    "urlRemesa",
+    "imgRelacionEnvio",
+    "imgrotulos",
+    "imgremesa",
     "respuesta",
     "mensaje"
 })
 @XmlRootElement(name = "GrabarDespacho4Response")
-public class GrabarDespacho4Response implements Serializable {
+public class GrabarDespacho4Response {
 
-    /**
-	 * Serial version
-	 */
-	private static final long serialVersionUID = 823796525649777710L;
-	protected String remesa;
-    protected String URLRelacionEnvio;
-    protected String URLRotulos;
-    protected String URLRemesa;
-    protected byte[] IMGRelacionEnvio;
-    protected byte[] IMGRotulos;
-    protected byte[] IMGRemesa;
+    protected String remesa;
+    @XmlElement(name = "URLRelacionEnvio")
+    protected String urlRelacionEnvio;
+    @XmlElement(name = "URLRotulos")
+    protected String urlRotulos;
+    @XmlElement(name = "URLRemesa")
+    protected String urlRemesa;
+    @XmlElement(name = "IMGRelacionEnvio")
+    protected byte[] imgRelacionEnvio;
+    @XmlElement(name = "imgrotulos")
+    protected byte[] imgrotulos;
+    @XmlElement(name = "imgremesa")
+    protected byte[] imgremesa;
     protected int respuesta;
     protected String mensaje;
 
@@ -96,59 +97,145 @@ public class GrabarDespacho4Response implements Serializable {
         this.remesa = value;
     }
 
-   
-
-
-
+    /**
+     * Obtiene el valor de la propiedad urlRelacionEnvio.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
     public String getURLRelacionEnvio() {
-		return URLRelacionEnvio;
-	}
+        return urlRelacionEnvio;
+    }
 
-	public void setURLRelacionEnvio(String uRLRelacionEnvio) {
-		URLRelacionEnvio = uRLRelacionEnvio;
-	}
+    /**
+     * Define el valor de la propiedad urlRelacionEnvio.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setURLRelacionEnvio(String value) {
+        this.urlRelacionEnvio = value;
+    }
 
-	public String getURLRotulos() {
-		return URLRotulos;
-	}
+    /**
+     * Obtiene el valor de la propiedad urlRotulos.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getURLRotulos() {
+        return urlRotulos;
+    }
 
-	public void setURLRotulos(String uRLRotulos) {
-		URLRotulos = uRLRotulos;
-	}
+    /**
+     * Define el valor de la propiedad urlRotulos.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setURLRotulos(String value) {
+        this.urlRotulos = value;
+    }
 
-	public String getURLRemesa() {
-		return URLRemesa;
-	}
+    /**
+     * Obtiene el valor de la propiedad urlRemesa.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getURLRemesa() {
+        return urlRemesa;
+    }
 
-	public void setURLRemesa(String uRLRemesa) {
-		URLRemesa = uRLRemesa;
-	}
+    /**
+     * Define el valor de la propiedad urlRemesa.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setURLRemesa(String value) {
+        this.urlRemesa = value;
+    }
 
-	public byte[] getIMGRelacionEnvio() {
-		return IMGRelacionEnvio;
-	}
+    /**
+     * Obtiene el valor de la propiedad imgRelacionEnvio.
+     * 
+     * @return
+     *     possible object is
+     *     byte[]
+     */
+    public byte[] getIMGRelacionEnvio() {
+        return imgRelacionEnvio;
+    }
 
-	public void setIMGRelacionEnvio(byte[] iMGRelacionEnvio) {
-		IMGRelacionEnvio = iMGRelacionEnvio;
-	}
+    /**
+     * Define el valor de la propiedad imgRelacionEnvio.
+     * 
+     * @param value
+     *     allowed object is
+     *     byte[]
+     */
+    public void setIMGRelacionEnvio(byte[] value) {
+        this.imgRelacionEnvio = value;
+    }
 
-	public byte[] getIMGRotulos() {
-		return IMGRotulos;
-	}
+    /**
+     * Obtiene el valor de la propiedad imgRotulos.
+     * 
+     * @return
+     *     possible object is
+     *     byte[]
+     */
+    public byte[] getImgrotulos() {
+        return imgrotulos;
+    }
 
-	public void setIMGRotulos(byte[] iMGRotulos) {
-		IMGRotulos = iMGRotulos;
-	}
+    /**
+     * Define el valor de la propiedad imgRotulos.
+     * 
+     * @param value
+     *     allowed object is
+     *     byte[]
+     */
+    public void setImgrotulos(byte[] value) {
+        this.imgrotulos = value;
+    }
 
-	public byte[] getIMGRemesa() {
-		return IMGRemesa;
-	}
+    /**
+     * Obtiene el valor de la propiedad imgRemesa.
+     * 
+     * @return
+     *     possible object is
+     *     byte[]
+     */
+    public byte[] getImgremesa() {
+        return imgremesa;
+    }
 
-	public void setIMGRemesa(byte[] iMGRemesa) {
-		IMGRemesa = iMGRemesa;
-	}
+    /**
+     * Define el valor de la propiedad imgRemesa.
+     * 
+     * @param value
+     *     allowed object is
+     *     byte[]
+     */
+    public void setImgremesa(byte[] value) {
+        this.imgremesa = value;
+    }
 
-	/**
+    /**
      * Obtiene el valor de la propiedad respuesta.
      * 
      */
