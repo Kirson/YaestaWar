@@ -181,7 +181,7 @@
 					<xdebug>true</xdebug>
 					<sourceDestDir>src/main/java</sourceDestDir>
 					<wsdlUrls>
-						<wsdlUrl>http://clientes.tcc.com.co/servicios/wsdespachos.asmx?wsdl</wsdlUrl>
+						<wsdlUrl>http://clientes.tcc.com.co/servicios/informacionremesas.asmx?wsdl</wsdlUrl>
 					</wsdlUrls>
 				</configuration>
 			</plugin>
