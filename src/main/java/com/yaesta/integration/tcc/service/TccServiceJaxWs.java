@@ -151,14 +151,17 @@ public class TccServiceJaxWs implements Serializable {
 					objDespacho.setCuentaremitente(tccBusinessAccount);
 					objDespacho.setIdentificacionremitente(yaestaRuc);
 					objDespacho.setTipoidentificacionremitente("NIT");
+					
 
 					String localeSource = sdi.getSupplier().getTccCode();
 					if (localeSource != null) {
 						objDespacho.setCiudadorigen(localeSource);
-					} else {
-						objDespacho.setCiudadorigen("17001050");
+					}/* 
+					else {
+						objDespacho.setCiudadorigen("17001050"); //Quitar eso en produccion
 
-					}
+					}*/
+					
 					objDespacho.setDireccionremitente(sdi.getSupplier().getAddress());
 					objDespacho.setTelefonoremitente(sdi.getSupplier().getPhone());
 					// objDespacho.setDirecciondestinatario(guideInfo.getOrderComplete().getShippingData().getAddress().getStreet());
@@ -255,11 +258,14 @@ public class TccServiceJaxWs implements Serializable {
 							} //
 						}
 					} // fin payment data
-
+					/*
 					String observacionText = "Orden: " + guideInfo.getOrderComplete().getOrderId() + " de "
 							+ guideInfo.getOrderComplete().getCustomerName() + " "
 							+ guideInfo.getOrderComplete().getClientProfileData().getDocument() + " \n ";
 					observacionText = observacionText + "Forma de Pago: " + formaPago;
+					*/
+					String observacionText = "Orden: " + guideInfo.getOrderComplete().getOrderId()+ " \n ";
+						   observacionText = observacionText + " Forma de Pago: " + formaPago+ " \n ";
 
 					if (guideInfo.getCustomerAdditionalInfo() != null
 							&& !guideInfo.getCustomerAdditionalInfo().equals("")) {
@@ -413,7 +419,15 @@ public class TccServiceJaxWs implements Serializable {
 						}
 
 						systemOut.println("Total Valor mercancia " + totalValue);
-						objDespacho.setTotalvalormercancia(totalValue.toString());
+						objDespacho.setTotalvalormercancia(totalAsegurado.toString());
+//						objDespacho.setTotalvalormercancia(totalValue.toString());
+//						objDespacho.setTotalvalorproducto(totalValue.toString());
+						
+//						if(hasAdjunto){
+//							objDespacho.setTotalvalorproducto(totalValue.toString());
+//						}
+						
+						
 
 						// documentacion dice enviar vacio
 						// objDespacho.setCodigolote(guideInfo.getOrderComplete().getOrderId());
@@ -431,7 +445,15 @@ public class TccServiceJaxWs implements Serializable {
 						detailList.add(guiD);
 
 					} // for de items
-
+					StringBuilder temp = new StringBuilder(objDespacho.getObservaciones()+" "+desc);
+					if(hasAdjunto){
+						
+						temp.append("\n VALOR A RECAUDAR: " + totalValue);
+						
+					}
+					objDespacho.setObservaciones(temp.toString());
+					
+					
 					systemOut.println("Total Asegurado " + totalAsegurado);
 					// unidad.setValormercancia(formatProductValue(totalValue));
 					unidad.setValormercancia("00");

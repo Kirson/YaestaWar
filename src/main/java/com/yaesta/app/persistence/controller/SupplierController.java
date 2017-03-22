@@ -172,5 +172,14 @@ public class SupplierController {
 		
 		return new ResponseEntity<SupplierResponseVO>(response,HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "/updateTCCZone", method = RequestMethod.GET)
+	public ResponseEntity<String> updateTCCZone(){
+		String response = "OK";
+		 
+		response=supplierService.updateTCCCode();
+		
+		return new ResponseEntity<String>(response,HttpStatus.OK);
+	}
 
 }

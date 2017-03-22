@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.yaesta.app.persistence.vo.OrderUpdVO;
 import com.yaesta.app.service.SystemOutService;
 import com.yaesta.integration.datil.json.bean.FacturaRespuestaSRI;
 import com.yaesta.integration.datil.json.bean.NotaCreditoRespuesta;
@@ -252,5 +253,13 @@ public class VitexIntegrationController {
 	public ResponseEntity<List<OrderComplete>> getPendingInvoiceOrders(@PathVariable("flag") String flag) {
 		List<OrderComplete> found = orderVitexService.getPendingInvoiceOrders(flag);
 		return new ResponseEntity<List<OrderComplete>>(found, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/updateOrdersStatus", method = RequestMethod.GET)
+	public ResponseEntity<OrderUpdVO> updateOrdersStatus(){
+		OrderUpdVO ouvo = orderVitexService.updateOrdersStatus();
+		
+		
+		return new ResponseEntity<OrderUpdVO>(ouvo,HttpStatus.OK);
 	}
 }
