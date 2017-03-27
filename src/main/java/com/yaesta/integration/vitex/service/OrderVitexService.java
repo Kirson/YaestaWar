@@ -584,31 +584,31 @@ public class OrderVitexService extends BaseVitexService {
 			// valor
 			// real de la orden
 			response = OrderVtexUtil.setRealValuesToOrderComplete(responseOri);
-		
-			String selectedDelivery = null;
-			List<LogisticsInfo> logisticsInfoList =response.getShippingData().getLogisticsInfo();
 
-			if(logisticsInfoList!=null && !logisticsInfoList.isEmpty()){
-				for(LogisticsInfo li:logisticsInfoList){
+			String selectedDelivery = null;
+			List<LogisticsInfo> logisticsInfoList = response.getShippingData().getLogisticsInfo();
+
+			if (logisticsInfoList != null && !logisticsInfoList.isEmpty()) {
+				for (LogisticsInfo li : logisticsInfoList) {
 					selectedDelivery = li.getSelectedSla();
 				}
 			}
-			
-			if(selectedDelivery!=null){
-				
-				if(selectedDelivery.contains("-")){
+
+			if (selectedDelivery != null) {
+
+				if (selectedDelivery.contains("-")) {
 					String[] selectedDeliveryPart = selectedDelivery.split("-");
-					selectedDelivery=selectedDeliveryPart[1];
+					selectedDelivery = selectedDeliveryPart[1];
 				}
-				
+
 				Catalog defaultDelivery = catalogService.findByNemonic(selectedDelivery.toUpperCase());
-				
-				if(defaultDelivery!=null){
+
+				if (defaultDelivery != null) {
 					response.setDefaultDelivery(defaultDelivery);
 					response.setDeliverySelected(defaultDelivery);
 				}
 			}
-			
+
 			List<Total> updateTotals = new ArrayList<Total>();
 			BigDecimal totalPrice = new BigDecimal(0);
 			BigDecimal totalDiscounts = new BigDecimal(0);
@@ -1162,73 +1162,80 @@ public class OrderVitexService extends BaseVitexService {
 
 		GuideDTO resultGuideInfo = tccServiceJax.generateGuides(guideDTO);
 
-		List<GuideBeanDTO> guideInfoBeanList = resultGuideInfo.getGuideBeanList();
-		List<GuideBeanDTO> guideInfoList = new ArrayList<GuideBeanDTO>();
+		if (resultGuideInfo.getResponse().equals("OK")) {
+			List<GuideBeanDTO> guideInfoBeanList = resultGuideInfo.getGuideBeanList();
+			List<GuideBeanDTO> guideInfoList = new ArrayList<GuideBeanDTO>();
 
-		if (guideInfoBeanList != null && !guideInfoBeanList.isEmpty()) {
-			for (GuideBeanDTO gbd : guideInfoBeanList) {
-				Guide guide = new Guide();
-				guide.setCreateDate(new Date());
-				guide.setOrderVitexId(orderComplete.getOrderId());
-				guide.setVitexDispatcherId(gbd.getGuideNumber());
-				guide.setGuideInfo(new Gson().toJson(gbd));
-				guide.setOrder(order);
-				guide.setDeliveryCost(gbd.getDeliveryCost());
-				guide.setDeliveryPayment(gbd.getDeliveryPayment());
-				guide.setItemValue(gbd.getItemValue());
-				guide.setDeliveryStatus("GENERATED");
-				guide.setSupplier(gbd.getSupplier());
-				guide.setCustomerName(orderComplete.getCustomerName());
-				guide.setDocumentUrl(gbd.getPdfUrl());
-				guide.setDocumentTagUrl(gbd.getPdfRotuleUrl());
-				try {
-					guide.setOrderDate(UtilDate.fromIsoToDateTime(orderComplete.getCreationDate()));
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				guide.setOrderStatus(orderComplete.getStatus());
-				guideService.saveGuide(guide);
-				gbd.setGuide(guide);
-				guideInfoList.add(gbd);
+			if (guideInfoBeanList != null && !guideInfoBeanList.isEmpty()) {
+				for (GuideBeanDTO gbd : guideInfoBeanList) {
+					Guide guide = new Guide();
+					guide.setCreateDate(new Date());
+					guide.setOrderVitexId(orderComplete.getOrderId());
+					guide.setVitexDispatcherId(gbd.getGuideNumber());
+					guide.setGuideInfo(new Gson().toJson(gbd));
+					guide.setOrder(order);
+					guide.setDeliveryCost(gbd.getDeliveryCost());
+					guide.setDeliveryPayment(gbd.getDeliveryPayment());
+					guide.setItemValue(gbd.getItemValue());
+					guide.setDeliveryStatus("GENERATED");
+					guide.setSupplier(gbd.getSupplier());
+					guide.setCustomerName(orderComplete.getCustomerName());
+					guide.setDocumentUrl(gbd.getPdfUrl());
+					guide.setDocumentTagUrl(gbd.getPdfRotuleUrl());
+					guide.setTotalValue(gbd.getTotalValue());
+					try {
+						guide.setOrderDate(UtilDate.fromIsoToDateTime(orderComplete.getCreationDate()));
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					guide.setOrderStatus(orderComplete.getStatus());
+					guideService.saveGuide(guide);
+					gbd.setGuide(guide);
+					guideInfoList.add(gbd);
 
-				guideService.saveGuide(guide);
-				gbd.setGuide(guide);
-				guideInfoList.add(gbd);
+					
 
-				List<GuideDetail> details = gbd.getDetails();
-				// Guardar los detalles de la guia
-				if (details != null && !details.isEmpty()) {
-					guideService.saveGuideDetail(guide, details);
-				}
-			}
-
-			guideDTO.setGuideBeanList(guideInfoList);
-
-			orderService.saveOrder(order);
-		}
-
-		result.setGuideInfoBean(response);
-
-		result.setGuides(responseList);
-
-		List<MailInfo> mailInfoList = prepareMailOrder(orderComplete, supplierDeliveryInfoList,
-				guideInfoBean.getDeliverySelected(), null);
-
-		for (MailInfo mailInfo : mailInfoList) {
-			for (GuideBeanDTO gDto : guideDTO.getGuideBeanList()) {
-				if (gDto.getSupplier().getId() == mailInfo.getRefId()) {
-					mailInfo.getAttachmentList().add(gDto.getPdfUrl());
-					if (gDto.getPdfTagUrl() != null) {
-						mailInfo.getAttachmentList().add(gDto.getPdfTagUrl());
+					List<GuideDetail> details = gbd.getDetails();
+					// Guardar los detalles de la guia
+					if (details != null && !details.isEmpty()) {
+						guideService.saveGuideDetail(guide, details);
 					}
 				}
-			}
-			mailService.sendMailTemplate(mailInfo, "guideNotification.vm");
-		}
 
-		if (mailNotifyCustomer.equals("Y")) {
-			sendGuideMailCustomer(orderComplete);
+				guideDTO.setGuideBeanList(guideInfoList);
+
+				orderService.saveOrder(order);
+			}
+
+			result.setGuideInfoBean(response);
+
+			result.setGuides(responseList);
+
+			List<MailInfo> mailInfoList = prepareMailOrder(orderComplete, supplierDeliveryInfoList,
+					guideInfoBean.getDeliverySelected(), null);
+
+			for (MailInfo mailInfo : mailInfoList) {
+				for (GuideBeanDTO gDto : guideDTO.getGuideBeanList()) {
+					if (gDto.getSupplier().getId() == mailInfo.getRefId()) {
+						//if(!mailInfo.getAttachmentList().contains(gDto.getPdfUrl())){
+							mailInfo.getAttachmentList().add(gDto.getPdfUrl());
+						//}
+						if (gDto.getPdfRotuleUrl() != null) {
+							mailInfo.getAttachmentList().add(gDto.getPdfRotuleUrl());
+						}
+					}
+				}
+				mailService.sendMailTemplate(mailInfo, "guideNotification.vm");
+			}
+
+			if (mailNotifyCustomer.equals("Y")) {
+				sendGuideMailCustomer(orderComplete);
+			}
+
+		} else {
+			result.setError("Error general procesando guias TCC");
+			
 		}
 
 		return result;

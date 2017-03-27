@@ -124,10 +124,11 @@ public class TccServiceJaxWs implements Serializable {
 	public GuideDTO generateGuides(GuideDTO guideInfo) {
 
 		GuideDTO result = new GuideDTO();
+		result.setResponse("OK");
 
 		try {
 
-			result.setResponse("OK");
+			
 
 			// String response = "OK";
 
@@ -416,17 +417,31 @@ public class TccServiceJaxWs implements Serializable {
 						} else {
 
 							systemOut.println("No hay adjunto");
+							objDespacho.setTotalvalorproducto("");
+							
+							
 						}
+						
+						objDespacho.setTotalvalorproducto("");
 
 						systemOut.println("Total Valor mercancia " + totalValue);
 						objDespacho.setTotalvalormercancia(totalAsegurado.toString());
 //						objDespacho.setTotalvalormercancia(totalValue.toString());
 //						objDespacho.setTotalvalorproducto(totalValue.toString());
 						
-//						if(hasAdjunto){
+						if(hasAdjunto){
 //							objDespacho.setTotalvalorproducto(totalValue.toString());
-//						}
-						
+							objDespacho.setTotalvalorproducto("");
+						}else
+						{
+							TpDocumentoReferencia docReferencia = new TpDocumentoReferencia();
+
+							docReferencia.setNumerodocumento("0");
+							docReferencia.setTipodocumento("FA"); // confirmar
+							docReferencia.setFechadocumento(UtilDate.fromDateToString(new Date()));
+
+							objDespacho.getDocumentoreferencia().add(docReferencia);
+						}
 						
 
 						// documentacion dice enviar vacio
