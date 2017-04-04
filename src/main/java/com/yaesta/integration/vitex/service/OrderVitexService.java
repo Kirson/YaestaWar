@@ -1183,13 +1183,22 @@ public class OrderVitexService extends BaseVitexService {
 					guide.setDocumentUrl(gbd.getPdfUrl());
 					guide.setDocumentTagUrl(gbd.getPdfRotuleUrl());
 					guide.setTotalValue(gbd.getTotalValue());
+					guide.setGuideNumber(gbd.getGuideNumber());
+					guide.setSerial(orderComplete.getSequence());
 					try {
 						guide.setOrderDate(UtilDate.fromIsoToDateTime(orderComplete.getCreationDate()));
 					} catch (ParseException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+					
+					String dateParts[] = UtilDate.dateParts(order.getCreateDate());
+					guide.setPeriode(dateParts[0] + "-" + dateParts[1]);
+
 					guide.setOrderStatus(orderComplete.getStatus());
+					guide.setPaymentMethod(OrderVtexUtil.getPaymentBean(orderComplete).getPaymentMethod());
+					guide.setHasPayment(gbd.getHasPayment());
+
 					guideService.saveGuide(guide);
 					gbd.setGuide(guide);
 					guideInfoList.add(gbd);
