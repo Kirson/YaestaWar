@@ -606,6 +606,13 @@ public class TccServiceJaxWs implements Serializable {
 					} else {
 						result.setResponse("ERROR");
 						System.out.println("No hay response en objeto");
+						YaEstaLog yaestalog = new YaEstaLog();
+						yaestalog.setLogDate(new Date());
+						yaestalog.setProcessName("WAYBILL-TCC");
+						yaestalog.setTextinfo("TCC Remesa : Error Response: " + message);
+						yaestalog.setOrderId(guideInfo.getOrderComplete().getOrderId());
+						logService.save(yaestalog);
+						
 						addGdb = false;
 					}
 					if (addGdb) {
@@ -664,7 +671,7 @@ public class TccServiceJaxWs implements Serializable {
 				result[0] = "NIT";
 				result[1] = "J";
 			} else {
-				result[0] = "PAS";
+				result[0] = "CC"; //PAS validar TCC
 				result[1] = "N";
 			}
 		} else {
