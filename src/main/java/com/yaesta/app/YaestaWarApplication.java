@@ -1,5 +1,6 @@
 package com.yaesta.app;
 
+import org.jsondoc.spring.boot.starter.EnableJSONDoc;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,6 +13,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableAutoConfiguration
 @ComponentScan(basePackages = {"com.yaesta"})
 @Configuration
+@EnableJSONDoc
 public class YaestaWarApplication extends YaestaSoapClient {
 
 	/**

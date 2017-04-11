@@ -158,11 +158,7 @@ public class TccServiceJaxWs implements Serializable {
 					String localeSource = sdi.getSupplier().getTccCode();
 					if (localeSource != null) {
 						objDespacho.setCiudadorigen(localeSource);
-					}/* 
-					else {
-						objDespacho.setCiudadorigen("17001050"); //Quitar eso en produccion
-
-					}*/
+					}
 					
 					objDespacho.setDireccionremitente(sdi.getSupplier().getAddress());
 					objDespacho.setTelefonoremitente(sdi.getSupplier().getPhone());
@@ -308,7 +304,7 @@ public class TccServiceJaxWs implements Serializable {
 													// vacio
 
 					// remitente
-					objDespacho.setPrimernombreremitente(sdi.getSupplier().getName());
+					objDespacho.setPrimernombreremitente("YAESTA: " +sdi.getSupplier().getName());
 					objDespacho.setPrimerapellidoremitente(
 							sdi.getSupplier().getContactName() + " " + sdi.getSupplier().getContactLastName());
 					objDespacho.setDireccionremitente(sdi.getSupplier().getAddress());
@@ -554,9 +550,11 @@ public class TccServiceJaxWs implements Serializable {
 						logService.save(yaestalog);
 						result.setResponse("ERROR");
 						addGdb = false;
-					} else if (gdesResponse != null && gdesResponse.getRemesa() != null) { // escribir
-																							// los
-																							// archivos
+					} else if (   gdesResponse != null 
+							   && gdesResponse.getRemesa() != null 
+							   && !gdesResponse.getRemesa().equals("-1")) { 	// escribir
+																				// los
+																				// archivos
 						gbd.setItemValue(itemValue);
 						gbd.setDeliveryCost(deliveryCost);
 						gbd.setDeliveryPayment(deliveryPayment);
@@ -594,6 +592,7 @@ public class TccServiceJaxWs implements Serializable {
 							yaestalog.setOrderId(guideInfo.getOrderComplete().getOrderId());
 							logService.save(yaestalog);
 							addGdb = false;
+							result.setResponse("ERROR");
 						}
 
 						// Grabar log en caso de exito

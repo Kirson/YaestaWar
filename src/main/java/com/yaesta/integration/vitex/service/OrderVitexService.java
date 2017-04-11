@@ -226,6 +226,7 @@ public class OrderVitexService extends BaseVitexService {
 	private @Value("${yaesta.pdf.guide.logo}") String yaestaGuideLogo;
 	private @Value("${yaesta.address}") String yaestaAddress;
 	private @Value("${yaesta.writeObjectQuery}") String writeObjectQuery;
+	private @Value("${tcc.service.mail.participants}") String tccMailParticipants;
 
 	public OrderVitexService() throws Exception {
 		super();
@@ -1554,6 +1555,14 @@ public class OrderVitexService extends BaseVitexService {
 		return result;
 	}
 
+	/**
+	 * Prepara informacion de email para proveedores y clientes en ordenes
+	 * @param orderComplete
+	 * @param supplierDeliveryInfoList
+	 * @param delivery
+	 * @param flag
+	 * @return
+	 */
 	private List<MailInfo> prepareMailOrder(OrderComplete orderComplete,
 			List<SupplierDeliveryInfo> supplierDeliveryInfoList, Catalog delivery, String flag) {
 
@@ -1593,6 +1602,18 @@ public class OrderVitexService extends BaseVitexService {
 						mpCourier.setEmail(contactsCourierEmails[j]);
 						mpCourier.setName(contactsCourierNames[j]);
 						receiverTotal.add(mpCourier);
+					}
+				}
+				else if (delivery != null && delivery.getNemonic().equals(DeliveryEnum.TCC.getNemonic())) {
+					List<Catalog> tccParticipants = catalogService.findByParentNemonic(tccMailParticipants);
+					
+					if(tccParticipants!=null && !tccParticipants.isEmpty()){
+						for(Catalog cparticipant:tccParticipants){
+							MailParticipant mpTCC = new MailParticipant();
+							mpTCC.setEmail(cparticipant.getDescription());
+							mpTCC.setName("TCC Responsable");
+							receiverTotal.add(mpTCC);
+						}
 					}
 				}
 
