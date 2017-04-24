@@ -53,7 +53,7 @@ public class ClientUtil implements Serializable {
 		}
 		cvo.setAddress(strTempDir);
 		cvo.setCanton(client.getCanton());
-		cvo.setDocument(client.getDocument());
+		cvo.setCustomerDocument(client.getCustomerDocument());
 		cvo.setEmail(client.getEmail());
 		cvo.setFirstName(client.getFirstName());
 		cvo.setLastName(client.getLastName());

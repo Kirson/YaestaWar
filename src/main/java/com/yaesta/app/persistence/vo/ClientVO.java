@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @Generated("org.jsonschema2pojo")
 @JsonPropertyOrder({
 	"id",
-	"document",
+	"customerDocument",
 	"firstName",
 	"lastName",
 	"phone",
@@ -29,7 +29,7 @@ public class ClientVO implements Serializable {
 	 */
 	private static final long serialVersionUID = -1421605428134335807L;
 	private Long id;
-	private String document;
+	private String customerDocument;
 	private String firstName;
 	private String lastName;
 	private String phone;
@@ -46,11 +46,12 @@ public class ClientVO implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getDocument() {
-		return document;
+	
+	public String getCustomerDocument() {
+		return customerDocument;
 	}
-	public void setDocument(String document) {
-		this.document = document;
+	public void setCustomerDocument(String customerDocument) {
+		this.customerDocument = customerDocument;
 	}
 	public String getFirstName() {
 		return firstName;

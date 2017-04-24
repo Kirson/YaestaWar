@@ -162,8 +162,7 @@ public class TccServiceJaxWs implements Serializable {
 					
 					objDespacho.setDireccionremitente(sdi.getSupplier().getAddress());
 					objDespacho.setTelefonoremitente(sdi.getSupplier().getPhone());
-					// objDespacho.setDirecciondestinatario(guideInfo.getOrderComplete().getShippingData().getAddress().getStreet());
-
+					
 					String province = guideInfo.getOrderComplete().getShippingData().getAddress().getState()
 							.toUpperCase();
 					String canton = guideInfo.getOrderComplete().getShippingData().getAddress().getCity().toUpperCase();
@@ -304,12 +303,13 @@ public class TccServiceJaxWs implements Serializable {
 													// vacio
 
 					// remitente
-					objDespacho.setPrimernombreremitente("YAESTA: " +sdi.getSupplier().getName());
+					//objDespacho.setPrimernombreremitente("YAESTA: " +sdi.getSupplier().getName()); //En atencion a solicitud del 21-04-2017
+					objDespacho.setPrimernombreremitente(sdi.getSupplier().getName());
 					objDespacho.setPrimerapellidoremitente(
 							sdi.getSupplier().getContactName() + " " + sdi.getSupplier().getContactLastName());
 					objDespacho.setDireccionremitente(sdi.getSupplier().getAddress());
 					objDespacho.setTelefonoremitente(sdi.getSupplier().getPhone());
-					// objDespacho.setCiudadorigen(sdi.getSupplier().getTccCode());
+				
 
 					String docTypeSup[] = determineDocumentType(yaestaRuc);
 

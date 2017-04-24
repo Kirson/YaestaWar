@@ -46,7 +46,7 @@ public class Customer implements Serializable {
 	private String password;
 	
 	@Column(name = "document")
-	private String document;
+	private String customerDocument;
 	
 	@Column(name = "gender")
 	private String gender;
@@ -166,12 +166,14 @@ public class Customer implements Serializable {
 		this.password = password;
 	}
 
-	public String getDocument() {
-		return document;
+	
+
+	public String getCustomerDocument() {
+		return customerDocument;
 	}
 
-	public void setDocument(String document) {
-		this.document = document;
+	public void setCustomerDocument(String customerDocument) {
+		this.customerDocument = customerDocument;
 	}
 
 	public String getGender() {
@@ -370,7 +372,7 @@ public class Customer implements Serializable {
 		result = prime * result + ((companyName == null) ? 0 : companyName.hashCode());
 		result = prime * result + ((companyNickName == null) ? 0 : companyNickName.hashCode());
 		result = prime * result + ((createDate == null) ? 0 : createDate.hashCode());
-		result = prime * result + ((document == null) ? 0 : document.hashCode());
+		result = prime * result + ((customerDocument == null) ? 0 : customerDocument.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
 		result = prime * result + ((gender == null) ? 0 : gender.hashCode());
@@ -430,10 +432,10 @@ public class Customer implements Serializable {
 				return false;
 		} else if (!createDate.equals(other.createDate))
 			return false;
-		if (document == null) {
-			if (other.document != null)
+		if (customerDocument == null) {
+			if (other.customerDocument != null)
 				return false;
-		} else if (!document.equals(other.document))
+		} else if (!customerDocument.equals(other.customerDocument))
 			return false;
 		if (email == null) {
 			if (other.email != null)

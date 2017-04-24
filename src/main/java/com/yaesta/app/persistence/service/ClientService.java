@@ -7,12 +7,15 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.yaesta.app.persistence.entity.Customer;
 import com.yaesta.app.persistence.entity.ClienteBodega;
 import com.yaesta.app.persistence.entity.TramacoZone;
 import com.yaesta.app.persistence.entity.YaEstaLog;
+import com.yaesta.app.persistence.repository.ClientPageRepository;
 import com.yaesta.app.persistence.repository.ClientRepository;
 import com.yaesta.app.persistence.repository.ClienteBodegaRepository;
 import com.yaesta.app.persistence.vo.ClientResponseVO;
@@ -33,6 +36,9 @@ public class ClientService {
 
 	@Autowired
 	private ClientRepository clientRepository;
+	
+	@Autowired
+	private ClientPageRepository clientPageRepository;
 
 	@Autowired
 	private ClienteBodegaRepository clienteBodegaRepository;
@@ -52,6 +58,25 @@ public class ClientService {
 	public List<Customer> getClients() {
 		return clientRepository.findAll();
 	}
+	
+	/**
+	 * Buscar cliente por documento
+	 * @param document
+	 * @return
+	 */
+	public Customer findByDocument(String document){
+		List<Customer> query = clientRepository.findByCustomerDocument(document);
+		
+		if(query!=null && !query.isEmpty()){
+			return query.get(0);
+		}else{
+			return null;
+		}
+	}
+	
+	public Page<Customer> getAll(Pageable pageable){
+		return clientPageRepository.findAll(pageable);
+	}
 
 	@Deprecated
 	@Transactional
@@ -69,7 +94,7 @@ public class ClientService {
 
 		// Iterar todas las ordenes
 		for (OrderComplete oc : ocList) {
-			Customer found = clientRepository.findByDocument(oc.getClientProfileData().getDocument());
+			Customer found = findByDocument(oc.getClientProfileData().getDocument());
 			Customer client = new Customer();
 			if (found != null) {
 				client = found;
@@ -77,7 +102,7 @@ public class ClientService {
 				client.setCreateDate(new Date());
 			}
 
-			client.setDocument(oc.getClientProfileData().getDocument());
+			client.setCustomerDocument(oc.getClientProfileData().getDocument());
 			client.setEmail(oc.getClientProfileData().getEmail());
 			client.setFirstName(oc.getClientProfileData().getFirstName());
 			client.setLastName(oc.getClientProfileData().getLastName());
@@ -107,7 +132,7 @@ public class ClientService {
 					+ oc.getShippingData().getAddress().getPostalCode();
 			client.setAddress(address);
 			client.setPostalCode(oc.getShippingData().getAddress().getPostalCode());
-			client.setWarehouseCode("COD" + client.getDocument());
+			client.setWarehouseCode("COD" + client.getCustomerDocument());
 			client.setCreateDate(new Date());
 			client.setIsNew("S");
 
@@ -149,7 +174,7 @@ public class ClientService {
 		List<Customer> clientList = clientRepository.findAll();
 
 		for (Customer cl : clientList) {
-			String code = "COD" + cl.getDocument();
+			String code = "COD" + cl.getCustomerDocument();
 			ClienteBodega found = clienteBodegaRepository.findOne(code);
 			if (found == null) {
 				ClienteBodega nCb = new ClienteBodega();
@@ -179,7 +204,7 @@ public class ClientService {
 			if(customerList!=null && !customerList.isEmpty()){
 				
 				for(Customer cl:customerList){
-					String code = "COD" + cl.getDocument();
+					String code = "COD" + cl.getCustomerDocument();
 					ClienteBodega found = clienteBodegaRepository.findOne(code);
 					if (found == null) {
 						ClienteBodega nCb = new ClienteBodega();
@@ -265,7 +290,7 @@ public class ClientService {
 	@Transactional
 	public Customer updateCustomerInfo(OrderComplete oc) {
 
-		Customer found = clientRepository.findByDocument(oc.getClientProfileData().getDocument());
+		Customer found = findByDocument(oc.getClientProfileData().getDocument());
 		Customer client = new Customer();
 		if (found != null) {
 			client = found;
@@ -273,7 +298,7 @@ public class ClientService {
 			client.setCreateDate(new Date());
 		}
 
-		client.setDocument(oc.getClientProfileData().getDocument());
+		client.setCustomerDocument(oc.getClientProfileData().getDocument());
 		client.setEmail(oc.getClientProfileData().getEmail());
 		client.setFirstName(oc.getClientProfileData().getFirstName());
 		client.setLastName(oc.getClientProfileData().getLastName());
@@ -303,7 +328,7 @@ public class ClientService {
 				+ oc.getShippingData().getAddress().getPostalCode();
 		client.setAddress(address);
 		client.setPostalCode(oc.getShippingData().getAddress().getPostalCode());
-		client.setWarehouseCode("COD" + client.getDocument());
+		client.setWarehouseCode("COD" + client.getCustomerDocument());
 		client.setCreateDate(new Date());
 		client.setIsNew("S");
 
@@ -339,7 +364,7 @@ public class ClientService {
 			clientRepository.save(client);
 		}
 
-		String code = "COD" + client.getDocument();
+		String code = "COD" + client.getCustomerDocument();
 		//ClienteBodega foundB = clienteBodegaRepository.findOne(code);
 		if (found == null) {
 			ClienteBodega nCb = new ClienteBodega();

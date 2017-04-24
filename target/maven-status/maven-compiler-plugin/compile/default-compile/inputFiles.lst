@@ -225,6 +225,7 @@ D:\env\eclipse\jee-neon\workspace_act\YaestaWar\src\main\java\com\yaesta\integra
 D:\env\eclipse\jee-neon\workspace_act\YaestaWar\src\main\java\com\yaesta\integration\vitex\wsdl\FreightCalculateV3.java
 D:\env\eclipse\jee-neon\workspace_act\YaestaWar\src\main\java\co\com\tcc\clientes\ClsRemesa.java
 D:\env\eclipse\jee-neon\workspace_act\YaestaWar\src\main\java\com\yaesta\integration\vitex\wsdl\GiftListSkuGetResponse.java
+D:\env\eclipse\jee-neon\workspace_act\YaestaWar\src\main\java\com\yaesta\app\persistence\repository\ClientPageRepository.java
 D:\env\eclipse\jee-neon\workspace_act\YaestaWar\src\main\java\com\yaesta\app\persistence\entity\OrderItem.java
 D:\env\eclipse\jee-neon\workspace_act\YaestaWar\src\main\java\com\yaesta\integration\vitex\wsdl\ProductEspecificationInsert.java
 D:\env\eclipse\jee-neon\workspace_act\YaestaWar\src\main\java\com\yaesta\app\persistence\controller\ClientController.java
@@ -288,6 +289,7 @@ D:\env\eclipse\jee-neon\workspace_act\YaestaWar\src\main\java\com\yaesta\integra
 D:\env\eclipse\jee-neon\workspace_act\YaestaWar\src\main\java\co\com\tcc\clientes\ConsultarRemesasTrackingMensajeriaResponse.java
 D:\env\eclipse\jee-neon\workspace_act\YaestaWar\src\main\java\com\yaesta\app\pdf\BuildGuidePDF.java
 D:\env\eclipse\jee-neon\workspace_act\YaestaWar\src\main\java\com\yaesta\integration\vitex\wsdl\StoreList.java
+D:\env\eclipse\jee-neon\workspace_act\YaestaWar\src\main\java\com\yaesta\app\persistence\vo\UserProcessVO.java
 D:\env\eclipse\jee-neon\workspace_act\YaestaWar\src\main\java\com\yaesta\integration\vitex\bean\WayBillSchema.java
 D:\env\eclipse\jee-neon\workspace_act\YaestaWar\src\main\java\com\yaesta\integration\vitex\json\bean\enums\package-info.java
 D:\env\eclipse\jee-neon\workspace_act\YaestaWar\src\main\java\com\yaesta\integration\vitex\wsdl\AddressInsertUpdateV3Response.java
@@ -374,6 +376,7 @@ D:\env\eclipse\jee-neon\workspace_act\YaestaWar\src\main\java\com\yaesta\integra
 D:\env\eclipse\jee-neon\workspace_act\YaestaWar\src\main\java\com\yaesta\integration\vitex\wsdl\ClientGetAllFromCreatedDateAndIdResponse.java
 D:\env\eclipse\jee-neon\workspace_act\YaestaWar\src\main\java\com\yaesta\integration\vitex\wsdl\StockKeepingUnitGetAllFromUpdatedDateResponse.java
 D:\env\eclipse\jee-neon\workspace_act\YaestaWar\src\main\java\com\yaesta\integration\datil\json\bean\GuiaRemision.java
+D:\env\eclipse\jee-neon\workspace_act\YaestaWar\src\main\java\com\yaesta\app\util\PasswordUtil.java
 D:\env\eclipse\jee-neon\workspace_act\YaestaWar\src\main\java\com\yaesta\integration\vitex\wsdl\OrderGetByStatusByQuantityResponse.java
 D:\env\eclipse\jee-neon\workspace_act\YaestaWar\src\main\java\com\yaesta\integration\vitex\wsdl\ProductEspecificationInsertByListResponse.java
 D:\env\eclipse\jee-neon\workspace_act\YaestaWar\src\main\java\com\yaesta\integration\vitex\wsdl\dto\ArrayOfOrderItemDTO.java

@@ -420,9 +420,11 @@ com\yaesta\integration\datil\json\bean\Establecimiento.class
 com\yaesta\integration\vitex\json\bean\Item.class
 com\yaesta\integration\vitex\wsdl\StockKeepingUnitGetAllByProductResponse.class
 com\yaesta\integration\vitex\wsdl\GiftCardGetByRedeptionCodeResponse.class
+com\yaesta\app\persistence\vo\UserProcessVO.class
 com\yaesta\integration\datil\json\bean\Mensaje.class
 com\yaesta\integration\vitex\wsdl\dto\ArrayOfOrderItemDTO.class
 com\yaesta\integration\vitex\controller\VitexIntegrationTestController.class
+com\yaesta\app\util\PasswordUtil.class
 com\yaesta\integration\vitex\wsdl\ServiceInsertUpdateResponse.class
 com\yaesta\integration\vitex\wsdl\DateTimeOffset.class
 com\yaesta\integration\vitex\wsdl\GiftListSkuDeleteResponse.class
@@ -633,6 +635,7 @@ com\yaesta\integration\datil\json\bean\Emisor.class
 com\yaesta\app\persistence\vo\CatalogVO.class
 co\com\tcc\clientes\ClsDespachoPaqueteria2.class
 com\yaesta\app\persistence\repository\ParameterRepository.class
+com\yaesta\app\persistence\repository\ClientPageRepository.class
 com\yaesta\app\pdf\TableBuilder.class
 com\yaesta\app\persistence\entity\Category.class
 co\com\tcc\clientes\ClsDespachoPaqueteria5.class
