@@ -189,13 +189,13 @@ public class OrderVitexService extends BaseVitexService {
 	private @Value("${mail.smtp.cc}") String mailCc;
 	private @Value("${mail.smtp.cc.name}") String mailCcName;
 	private @Value("${mail.text.guide}") String mailTextGuide;
-	private @Value("${mail.text.guide.2}") String mailTextGuide2;
-	private @Value("${mail.text.guide.3}") String mailTextGuide3;
-	private @Value("${mail.text.guide.4}") String mailTextGuide4;
-	private @Value("${mail.text.guide.5}") String mailTextGuide5;
-	private @Value("${mail.text.guide.6}") String mailTextGuide6;
-	private @Value("${mail.text.guide.7}") String mailTextGuide7;
-	private @Value("${mail.text.guide.8}") String mailTextGuide8;
+	private @Value("${mail.text.guide2}") String mailTextGuide2;
+	private @Value("${mail.text.guide3}") String mailTextGuide3;
+	private @Value("${mail.text.guide4}") String mailTextGuide4;
+	private @Value("${mail.text.guide5}") String mailTextGuide5;
+	private @Value("${mail.text.guide6}") String mailTextGuide6;
+	private @Value("${mail.text.guide7}") String mailTextGuide7;
+	private @Value("${mail.text.guide8}") String mailTextGuide8;
 	private @Value("${mail.text.guide.token}") String mailTextGuideToken;
 	private @Value("${tramaco.contacts}") String tramacoContacts;
 	private @Value("${tramaco.contacts.names}") String tramacoContactsNames;
@@ -211,10 +211,10 @@ public class OrderVitexService extends BaseVitexService {
 	private @Value("${mail.path.logo.image}") String logoPath;
 	private @Value("${mail.image.prefix}") String mailImagePrefix;
 	private @Value("${mail.text.guide.customer}") String mailTextGuideCustomer;
-	private @Value("${mail.text.guide.customer.2}") String mailTextGuideCustomer2;
-	private @Value("${mail.text.guide.customer.3}") String mailTextGuideCustomer3;
-	private @Value("${mail.text.guide.customer.4}") String mailTextGuideCustomer4;
-	private @Value("${mail.text.guide.customer.5}") String mailTextGuideCustomer5;
+	private @Value("${mail.text.guide.customer2}") String mailTextGuideCustomer2;
+	private @Value("${mail.text.guide.customer3}") String mailTextGuideCustomer3;
+	private @Value("${mail.text.guide.customer4}") String mailTextGuideCustomer4;
+	private @Value("${mail.text.guide.customer5}") String mailTextGuideCustomer5;
 	private @Value("${yaesta.log.path}") String yaestaLogPath;
 	private @Value("${yaesta.log.prefix}") String yaestaPrefix;
 	private @Value("${vitex.rest.maxpages}") String vitexRestMaxPages;
@@ -558,6 +558,36 @@ public class OrderVitexService extends BaseVitexService {
 		String json = target.request(MediaType.TEXT_PLAIN).headers(myHeaders).get(String.class);
 
 		OrderSchema response = new Gson().fromJson(json, OrderSchema.class);
+		return response;
+	}
+	
+	
+	public OrderComplete getOrderCompleteVtex(String orderId) {
+		OrderComplete response = new OrderComplete();
+		try {
+
+			client = ClientBuilder.newClient();
+
+			String restUrl = this.vitexRestUrl + "/api/oms/pvt/orders/" + orderId;
+			target = client.target(restUrl);
+
+			MultivaluedMap<String, Object> myHeaders = new MultivaluedHashMap<String, Object>();
+			myHeaders.add(vitexRestAppkeyName, vitexRestAppkey);
+			myHeaders.add(vitexRestTokenName, vitexRestToken);
+			String json = target.request(MediaType.TEXT_PLAIN).headers(myHeaders).get(String.class);
+
+			response = new Gson().fromJson(json, OrderComplete.class);
+		}catch(Exception e){
+			
+			YaEstaLog yaestalog = new YaEstaLog();
+			yaestalog.setLogDate(new Date());
+			yaestalog.setProcessName("GETOrdercompleteVtex: Error general");
+			yaestalog.setTextinfo("Error: general al procesar " + orderId + " " + e.getMessage());
+			yaestalog.setOrderId(orderId);
+			logService.save(yaestalog);
+			e.printStackTrace();
+		}
+		
 		return response;
 	}
 
@@ -1179,10 +1209,13 @@ public class OrderVitexService extends BaseVitexService {
 					guide.setDeliveryPayment(gbd.getDeliveryPayment());
 					guide.setItemValue(gbd.getItemValue());
 					guide.setDeliveryStatus("GENERATED");
+					guide.setStatus("GENERATED-PDF");
+					guide.setDeliveryName("TCC");
 					guide.setSupplier(gbd.getSupplier());
 					guide.setCustomerName(orderComplete.getCustomerName());
 					guide.setDocumentUrl(gbd.getPdfUrl());
 					guide.setDocumentTagUrl(gbd.getPdfRotuleUrl());
+					guide.setRotuleUrl(gbd.getPdfRotuleUrl());
 					guide.setTotalValue(gbd.getTotalValue());
 					guide.setGuideNumber(gbd.getGuideNumber());
 					guide.setSerial(orderComplete.getSequence());
@@ -1192,7 +1225,7 @@ public class OrderVitexService extends BaseVitexService {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					
+
 					String dateParts[] = UtilDate.dateParts(order.getCreateDate());
 					guide.setPeriode(dateParts[0] + "-" + dateParts[1]);
 
@@ -1203,8 +1236,6 @@ public class OrderVitexService extends BaseVitexService {
 					guideService.saveGuide(guide);
 					gbd.setGuide(guide);
 					guideInfoList.add(gbd);
-
-					
 
 					List<GuideDetail> details = gbd.getDetails();
 					// Guardar los detalles de la guia
@@ -1228,9 +1259,9 @@ public class OrderVitexService extends BaseVitexService {
 			for (MailInfo mailInfo : mailInfoList) {
 				for (GuideBeanDTO gDto : guideDTO.getGuideBeanList()) {
 					if (gDto.getSupplier().getId() == mailInfo.getRefId()) {
-						//if(!mailInfo.getAttachmentList().contains(gDto.getPdfUrl())){
-							mailInfo.getAttachmentList().add(gDto.getPdfUrl());
-						//}
+						// if(!mailInfo.getAttachmentList().contains(gDto.getPdfUrl())){
+						mailInfo.getAttachmentList().add(gDto.getPdfUrl());
+						// }
 						if (gDto.getPdfRotuleUrl() != null) {
 							mailInfo.getAttachmentList().add(gDto.getPdfRotuleUrl());
 						}
@@ -1245,7 +1276,7 @@ public class OrderVitexService extends BaseVitexService {
 
 		} else {
 			result.setError("Error general procesando guias TCC");
-			
+
 		}
 
 		return result;
@@ -1557,6 +1588,7 @@ public class OrderVitexService extends BaseVitexService {
 
 	/**
 	 * Prepara informacion de email para proveedores y clientes en ordenes
+	 * 
 	 * @param orderComplete
 	 * @param supplierDeliveryInfoList
 	 * @param delivery
@@ -1603,12 +1635,11 @@ public class OrderVitexService extends BaseVitexService {
 						mpCourier.setName(contactsCourierNames[j]);
 						receiverTotal.add(mpCourier);
 					}
-				}
-				else if (delivery != null && delivery.getNemonic().equals(DeliveryEnum.TCC.getNemonic())) {
+				} else if (delivery != null && delivery.getNemonic().equals(DeliveryEnum.TCC.getNemonic())) {
 					List<Catalog> tccParticipants = catalogService.findByParentNemonic(tccMailParticipants);
-					
-					if(tccParticipants!=null && !tccParticipants.isEmpty()){
-						for(Catalog cparticipant:tccParticipants){
+
+					if (tccParticipants != null && !tccParticipants.isEmpty()) {
+						for (Catalog cparticipant : tccParticipants) {
 							MailParticipant mpTCC = new MailParticipant();
 							mpTCC.setEmail(cparticipant.getDescription());
 							mpTCC.setName("TCC Responsable");
@@ -2248,6 +2279,7 @@ public class OrderVitexService extends BaseVitexService {
 									oi.setGuideValue(guide.getDeliveryPayment());
 									oi.setItemPartialValue(partialItemValue);
 								}
+								oi.setOrderStatus(order.getVitexStatus());
 								orderService.updateOrderItem(oi);
 							}
 						}
@@ -2260,28 +2292,53 @@ public class OrderVitexService extends BaseVitexService {
 	public OrderUpdVO updateOrdersStatus() {
 		OrderUpdVO ouvo = new OrderUpdVO();
 		ouvo.setMessage("OK");
+		System.out.println("Inicia actualizacion de estados");
+		Long count = 0L;
 		try {
 			List<Order> orders = orderService.getAll();
-			Long count = 0L;
+
 			if (orders != null && !orders.isEmpty()) {
 				for (Order order : orders) {
+					try {
+						if (order.getVitexId() != null) {
+							OrderComplete oc = this.getOrderCompleteVtex(order.getVitexId());
+							if (oc != null) {
+								if (!oc.getStatus().equals(order.getVitexStatus())) {
+									order.setVitexStatus(oc.getStatus());
+									orderService.saveOrder(order);
+									
 
-					if (order.getVitexId() != null) {
-						OrderComplete oc = this.getOrderComplete(order.getVitexId());
-						if (oc != null) {
-							if (!oc.getStatus().equals(order.getVitexStatus())) {
-								order.setVitexStatus(oc.getStatus());
-								orderService.saveOrder(order);
-								count++;
-								continue;
+									
+									count++;
+									
+								}//fin id estados diferentes
+								//Actualizar siempre los detalles misma condicion siempre 
+								//y cuando no esten iguales a la orden padre
+								List<OrderItem> itemsList = orderService.getOrderItems(order);
+								if (itemsList != null && !itemsList.isEmpty()) {
+									for (OrderItem oi : itemsList) {
+										if (!oc.getStatus().equals(oi.getOrderStatus())) {
+											oi.setOrderStatus(oc.getStatus());
+											orderService.updateOrderItem(oi);
+										}
+									}
+								}
 							}
-						}
+							
+
+						} // fin de if
+					} catch (Exception e) {
+						System.out.println(
+								"Error al actualizar estado de orden " + order.getVitexId() + " " + e.getMessage());
+						continue;
 					}
+
 					ouvo.setCount(count);
 				}
 			}
+			System.out.println("Finaliza actualizacion de estados " + count);
 		} catch (Exception e) {
-			ouvo.setMessage("ERROR:" + e.getMessage());
+			ouvo.setMessage("ERROR General:" + e.getMessage());
 		}
 		return ouvo;
 	}
